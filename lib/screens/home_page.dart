@@ -1,6 +1,5 @@
 import 'package:donence_app/screens/library_page.dart';
 import 'package:donence_app/screens/search_page.dart';
-import 'package:donence_app/services/book_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -34,13 +33,6 @@ class _HomePageState extends State<HomePage> {
         ) ??
         false;
   }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-  
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -70,17 +62,17 @@ class _HomePageState extends State<HomePage> {
   Widget _appBar() => AppBar(
     elevation: _selectedIndex == 0 ? 0 : 4,
     centerTitle: true,
-    title: Text("Donence"),
+    title: Text('Donence'),
     backgroundColor: Colors.purple[900],
   );
 
   Widget _bottomBar() => BottomNavigationBar(
     items: [
       BottomNavigationBarItem(
-          icon: Icon(Icons.book_rounded), label: "Library"),
-      BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: "Add"),
+          icon: Icon(Icons.book_rounded), label: 'Library'),
+      BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: 'Add'),
       BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_today), label: "Search"),
+          icon: Icon(Icons.calendar_today), label: 'Search'),
     ],
     currentIndex: _selectedIndex,
     onTap: _onTap,
@@ -97,7 +89,7 @@ class _HomePageState extends State<HomePage> {
           currentAccountPicture:
               CircleAvatar(backgroundImage: NetworkImage(user.photoURL)),
         ),
-        ListTile(title: Text("SOME FEATURE"), leading: Icon(Icons.ac_unit,),),
+        ListTile(title: Text('SOME FEATURE'), leading: Icon(Icons.ac_unit,),),
       ],
     ),
   );
