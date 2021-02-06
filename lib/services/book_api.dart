@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:donence_app/models/book.dart';
 
-class BookAPI{
-  static final String urlIsbn = 'https://www.googleapis.com/books/v1/volumes?q=isbn:';
-  static final String urlSearch = 'https://www.googleapis.com/books/v1/volumes?q=';
-  static final String api_key = 'AIzaSyBKPrJ8ZNhvZj4WrmMAPC4at82sRkXdUN4';
+class BookAPI {
+  static final String urlIsbn =
+      'https://www.googleapis.com/books/v1/volumes?q=isbn:';
+  static final String urlSearch =
+      'https://www.googleapis.com/books/v1/volumes?q=';
+  static final String api_key = 'AIzaSyBeE1FxYwj1VSVJ_Nk6FfsNM4SJwVjGWYc';
 
-  static Future<Book> getIsbnBook(String isbn) async{
+  static Future<Book> getIsbnBook(String isbn) async {
     var responseUrl = urlIsbn + isbn;
     var response = await getResponse(responseUrl);
 
@@ -19,8 +21,7 @@ class BookAPI{
     var publisher = '';
     var publish_date = '';
 
-
-    try{
+    try {
       var volumeInfo = response.data['items'][0]['volumeInfo'];
 
       title = volumeInfo['title'];
@@ -32,15 +33,17 @@ class BookAPI{
       publisher = volumeInfo['publisher'];
       publish_date = volumeInfo['publishedDate'];
 
-      return Book(title,thumbnail,author,description,page,isbn13,publisher,publish_date);
-    } catch(e){
+      return Book(title, thumbnail, author, description, page, isbn13,
+          publisher, publish_date);
+    } catch (e) {
       print(e);
       return null;
     }
   }
 
-  static Future<List<Book>> getSearchBooks(String search) async{
-    var responseUrl = urlSearch + search + '+intitle:keyes&key=' + api_key;
+  static Future<List<Book>> getSearchBooks(String search) async {
+    var responseUrl = urlSearch + search + '&key=' + api_key;
+    print(responseUrl);
     var response = await getResponse(responseUrl);
 
     List items = response.data['items'];
@@ -54,33 +57,36 @@ class BookAPI{
     var publisher = '';
     var publish_date = '';
 
-    try {
-      var listBooks = <Book>[];
+    var listBooks = <Book>[];
 
-      for (var i = 0; i < items.length; ++i) {
+    for (var i = 0; i < items.length; ++i) {
+      try {
         var volumeInfo = items[i]['volumeInfo'];
 
         title = volumeInfo['title'];
-        thumbnail = volumeInfo['imageLinks']['thumbnail'];
+        if (volumeInfo['imageLinks'] != null &&
+            volumeInfo['imageLinks']['thumbnail'] != null) {
+          thumbnail = volumeInfo['imageLinks']['thumbnail'];
+        }
         author = volumeInfo['authors'][0];
         description = volumeInfo['description'];
         page = volumeInfo['pageCount'];
         try {
           isbn13 = volumeInfo['industryIdentifiers'][1]['identifier'];
-        } catch(f){
+        } catch (f) {
           isbn13 = volumeInfo['industryIdentifiers'][0]['identifier'];
         }
         publisher = volumeInfo['publisher'] ?? '';
         publish_date = volumeInfo['publishedDate'] ?? '';
-
-        var x = Book(title,thumbnail,author,description,page,isbn13,publisher,publish_date);
-        listBooks.add(x);
+      } catch (_) {
+        continue;
       }
-      return listBooks;
-    } catch(e){
-      print(e);
-      return null;
+
+      var x = Book(title, thumbnail, author, description, page, isbn13,
+          publisher, publish_date);
+      listBooks.add(x);
     }
+    return listBooks;
   }
 
   static Future<Response> getResponse(String url) async {
