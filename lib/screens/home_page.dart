@@ -101,6 +101,11 @@ class _HomePageState extends State<HomePage> {
           onTap: () => scanBarcodeNormal(),
         ),
         ListTile(
+          leading: Icon(Icons.search),
+          title: Text('Search books by name or ISBN'),
+          onTap: () => Navigator.of(context).pushNamed('/search'),
+        ),
+        ListTile(
           leading: Icon(Icons.edit),
           title: Text('Add new book manually'),
           onTap: () => Navigator.of(context).pushNamed('/add_manual'),
