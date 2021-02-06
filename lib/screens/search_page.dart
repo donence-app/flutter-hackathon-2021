@@ -112,7 +112,10 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void addToWishlist(Book book) async{
-    var ref =  await DatabaseService.wishlistReference(widget.currentUser.uid);
-    await ref.child(book.title).set(book.toMap());
+    await DatabaseService.setWishlist(widget.currentUser.uid, book.title, book.toMap());
+
+    var ref2 = await DatabaseService.allWishlistReference();
+    await ref2.child('Books').child(widget.currentUser.email).set(book.toMap());
   }
+
 }
