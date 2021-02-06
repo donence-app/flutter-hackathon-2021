@@ -1,6 +1,8 @@
+import 'package:donence_app/models/book.dart';
 import 'package:donence_app/provider/google_sign_in.dart';
 import 'package:donence_app/screens/library_page.dart';
 import 'package:donence_app/screens/search_page.dart';
+import 'package:donence_app/services/book_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -107,6 +109,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ],
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
