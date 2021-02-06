@@ -9,7 +9,7 @@ class _BooksPageState extends State<BooksPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Books"),
+      child: Text('Books'),
     );
   }
 }
