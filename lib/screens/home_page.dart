@@ -1,5 +1,6 @@
 import 'package:donence_app/screens/library_page.dart';
 import 'package:donence_app/screens/search_page.dart';
+import 'package:donence_app/services/book_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final user = FirebaseAuth.instance.currentUser;
-
+  
   Future<bool> _onWillPop() {
     return showDialog(
           context: context,
@@ -34,6 +35,12 @@ class _HomePageState extends State<HomePage> {
         false;
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -61,34 +68,37 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _appBar() => AppBar(
-        elevation: _selectedIndex == 0 ? 0 : 4,
-        title: Text("Donence"),
-      );
+    elevation: _selectedIndex == 0 ? 0 : 4,
+    centerTitle: true,
+    title: Text("Donence"),
+    backgroundColor: Colors.purple[900],
+  );
 
   Widget _bottomBar() => BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.book_rounded), label: "Library"),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: "Add"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: "Search"),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onTap,
-        type: BottomNavigationBarType.fixed,
-      );
+    items: [
+      BottomNavigationBarItem(
+          icon: Icon(Icons.book_rounded), label: "Library"),
+      BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: "Add"),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.calendar_today), label: "Search"),
+    ],
+    currentIndex: _selectedIndex,
+    onTap: _onTap,
+    type: BottomNavigationBarType.fixed,
+    selectedItemColor: Colors.purple[900],
+  );
 
   Widget _drawer() => Drawer(
-        child: Column(
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text(user.displayName),
-              accountEmail: Text(user.email),
-              currentAccountPicture:
-                  CircleAvatar(backgroundImage: NetworkImage(user.photoURL)),
-            ),
-            ListTile(title: Text("SOME FEATURE"), leading: Icon(Icons.ac_unit,),),
-          ],
+    child: Column(
+      children: [
+        UserAccountsDrawerHeader(
+          accountName: Text(user.displayName),
+          accountEmail: Text(user.email),
+          currentAccountPicture:
+              CircleAvatar(backgroundImage: NetworkImage(user.photoURL)),
         ),
-      );
+        ListTile(title: Text("SOME FEATURE"), leading: Icon(Icons.ac_unit,),),
+      ],
+    ),
+  );
 }
