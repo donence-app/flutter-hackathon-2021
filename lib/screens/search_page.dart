@@ -11,10 +11,10 @@ class _SearchPageState extends State<SearchPage> {
   List<Book> books = [];
   final TextEditingController _filter = TextEditingController();
 
-
   void _getBooks() async {
     print(_filter.text);
     await BookAPI.getSearchBooks(_filter.text).then((value) {
+      if (value == null) return;
       print(value);
       setState(() {
         books = value;
@@ -51,7 +51,10 @@ class _SearchPageState extends State<SearchPage> {
             controller: _filter,
             decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search), hintText: "Search..."),
-            onChanged: (s) {
+            // onChanged: (_) {
+            //   _getBooks();
+            // },
+            onSubmitted: (_) {
               _getBooks();
             },
           ),
