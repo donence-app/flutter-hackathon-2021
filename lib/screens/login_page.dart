@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
             return buildLoading();
           } else if (snapshot.hasData) {
             addUserDatabase();
-            return HomePage();
+            return HomePage(FirebaseAuth.instance.currentUser);
           } else {
             return SignUpWidget();
           }
