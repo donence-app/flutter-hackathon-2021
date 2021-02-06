@@ -71,7 +71,7 @@ class _SliderLayoutViewState extends State<SliderLayoutView> {
                             }
                           },
                           child: Text(
-                            "NEXT",
+                            'NEXT',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.0,
@@ -92,7 +92,7 @@ class _SliderLayoutViewState extends State<SliderLayoutView> {
                                     builder: (context) => LoginPage()));
                           },
                           child: Text(
-                            "SKIP",
+                            'SKIP',
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 14.0,

@@ -2,7 +2,6 @@ import 'package:donence_app/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:location_permissions/location_permissions.dart';
 
 class ExchangeBooksPage extends StatefulWidget {
   final User currentUser;
@@ -65,7 +64,7 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
         children: [
           Center(
             child: FlatButton(
-              child: Text("CHECK"),
+              child: Text('CHECK'),
               onPressed: () {
                 _determinePosition().then((value) {
                   print(value);
