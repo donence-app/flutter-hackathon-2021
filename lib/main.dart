@@ -1,4 +1,4 @@
-import 'package:donence_app/screens/home_page.dart';
+import 'package:donence_app/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     ),
     initialRoute: '/',
     routes: {
-      '/': (context) => HomePage(),
+      '/': (context) => LoginPage(),
       //'/add_isbn': (context) => Page(),
       //'/add_manual': (context) => Page(),
     },
