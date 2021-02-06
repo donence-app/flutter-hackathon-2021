@@ -37,6 +37,7 @@ dependencies:
   firebase_database: ^4.4.0
   firebase_core: "0.5.3"
   dio: ^3.0.10
+  location_permissions: ^3.0.0+1
 
 dev_dependencies:
 

@@ -1,5 +1,6 @@
 import 'package:donence_app/models/book.dart';
 import 'package:donence_app/provider/google_sign_in.dart';
+import 'package:donence_app/screens/exchange_books_page.dart';
 import 'package:donence_app/screens/library_page.dart';
 import 'package:donence_app/screens/search_page.dart';
 import 'package:donence_app/services/book_api.dart';
@@ -182,10 +183,13 @@ class _HomePageState extends State<HomePage> {
                   CircleAvatar(backgroundImage: NetworkImage(user.photoURL)),
             ),
             ListTile(
-              title: Text('SOME FEATURE'),
+              title: Text('Exchange Books'),
               leading: Icon(
-                Icons.ac_unit,
+                Icons.autorenew,
               ),
+              onTap: () {
+                Navigator.of(context).pushNamed('/exchange_books');
+              },
             ),
             ListTile(
               title: Text('Log Out'),
