@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:donence_app/models/book.dart';
 import 'package:donence_app/services/book_api.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +11,10 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   List<Book> books = []; // names we get from API
-  final TextEditingController _filter = new TextEditingController();
+  final TextEditingController _filter = TextEditingController();
 
   void _getNames() async {
-    List<Book> tempList = await BookAPI.getSearchBooks(_filter.text);
+    var tempList = await BookAPI.getSearchBooks(_filter.text);
     setState(() {
       books = tempList;
     });
@@ -49,7 +48,7 @@ class _SearchPageState extends State<SearchPage> {
           TextField(
             controller: _filter,
             decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search), hintText: "Search..."),
+                prefixIcon: Icon(Icons.search), hintText: 'Search...'),
             onChanged: (s) {
               _getNames();
             },
