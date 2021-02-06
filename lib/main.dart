@@ -1,4 +1,4 @@
-import 'package:donence_app/screens/home_page.dart';
+import 'package:donence_app/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -14,17 +14,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: title,
-    theme: ThemeData(
-      primarySwatch: Colors.purple,
-      fontFamily: 'Poppins',
-    ),
-    initialRoute: '/',
-    routes: {
-      '/': (context) => HomePage(),
-      //'/add_isbn': (context) => Page(),
-      //'/add_manual': (context) => Page(),
-    },
-  );
+        debugShowCheckedModeBanner: false,
+        title: title,
+        theme: ThemeData(
+          primarySwatch: Colors.purple,
+          fontFamily: 'Poppins',
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => LoginPage(),
+          //'/add_isbn': (context) => Page(),
+          //'/add_manual': (context) => Page(),
+        },
+      );
 }
