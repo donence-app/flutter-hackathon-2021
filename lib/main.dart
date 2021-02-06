@@ -3,6 +3,7 @@ import 'package:donence_app/screens/exchange_books_page.dart';
 import 'package:donence_app/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:donence_app/screens/landing_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,17 +17,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: title,
-    theme: ThemeData(
-      primarySwatch: Colors.purple,
-      fontFamily: 'Poppins',
-    ),
-    initialRoute: '/',
-    routes: {
-      '/': (context) => LoginPage(),
-      //'/add_isbn': (context) => Page(),
-      '/add_manual': (context) => AddBookPage(),
-    },
-  );
+        debugShowCheckedModeBanner: false,
+        title: title,
+        theme: ThemeData(
+          primarySwatch: Colors.purple,
+          fontFamily: 'Poppins',
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => LandingPage(),
+          //'/add_isbn': (context) => Page(),
+          '/add_manual': (context) => AddBookPage(),
+        },
+      );
 }
