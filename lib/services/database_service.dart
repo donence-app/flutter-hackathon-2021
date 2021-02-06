@@ -5,6 +5,11 @@ class DatabaseService {
     await FirebaseDatabase.instance.reference().child('Users').child(uid).set(map);
   }
 
+  static void setLocation(String uid, String longitude, String latitude) async{
+    await FirebaseDatabase.instance.reference().child('Users').child(uid).child('location').child('longitude').set(longitude);
+    await FirebaseDatabase.instance.reference().child('Users').child(uid).child('location').child('latitude').set(latitude);
+  }
+
   static void setWishlist(String uid, String title, Map map) async{
     await FirebaseDatabase.instance.reference().child('Users').child(uid).child('Wishlist').child(title).set(map);
   }

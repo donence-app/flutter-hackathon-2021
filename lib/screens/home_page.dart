@@ -1,4 +1,5 @@
 import 'package:donence_app/provider/google_sign_in.dart';
+import 'package:donence_app/screens/exchange_books_page.dart';
 import 'package:donence_app/screens/library_page.dart';
 import 'package:donence_app/screens/search_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
   String _scanBarcode;
 
-   void startBarcodeScanStream() async {
+  void startBarcodeScanStream() async {
     FlutterBarcodeScanner.getBarcodeStreamReceiver(
             '#ff6666', 'Cancel', true, ScanMode.BARCODE)
         .listen((barcode) => print(barcode));
@@ -51,7 +52,6 @@ class _HomePageState extends State<HomePage> {
       _scanBarcode = barcodeScanRes;
     });
   }
-
 
   Future<bool> _onWillPop() {
     return showDialog(
@@ -184,10 +184,17 @@ class _HomePageState extends State<HomePage> {
                   CircleAvatar(backgroundImage: NetworkImage(user.photoURL)),
             ),
             ListTile(
-              title: Text('SOME FEATURE'),
+              title: Text('Exchange Books'),
               leading: Icon(
-                Icons.ac_unit,
+                Icons.autorenew,
               ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext ctx) =>
+                            ExchangeBooksPage(widget.currentUser)));
+              },
             ),
             ListTile(
               title: Text('Log Out'),
