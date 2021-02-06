@@ -1,8 +1,16 @@
 import 'package:donence_app/models/book.dart';
 import 'package:donence_app/services/book_api.dart';
+import 'package:donence_app/services/database_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SearchPage extends StatefulWidget {
+  final User currentUser;
+
+  SearchPage(this.currentUser);
+
   @override
   _SearchPageState createState() => _SearchPageState();
 }
@@ -35,7 +43,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
             title: Text(books[index].title),
             subtitle: Text(books[index].author),
-            onTap: () => print(books[index].title),
+            onTap: () => tapTheBook(index),
           ),
         );
       },
@@ -71,4 +79,49 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
+
+  void tapTheBook(int index){
+    Alert(
+      context: context,
+      content: Column(
+        children: [
+          Text('Author: ' + books[index].author,style: TextStyle(fontSize: 13.5),),
+          SizedBox(height: 15,),
+          Image.network(
+            books[index].thumbnail,
+            height: 120,
+            fit: BoxFit.fitHeight,
+          ),
+          SizedBox(height: 10,),
+          books[index].description != null ? Text('Description: ' + books[index].description,style: TextStyle(fontSize: 13.5),) : SizedBox(),
+        ],
+      ),
+      title: books[index].title,
+      buttons: [
+
+        DialogButton(
+          child: Text(
+            'Add to Wishlist',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () {
+            addToWishlist(books[index]);
+            Navigator.pop(context);
+          },
+          gradient: LinearGradient(colors: [
+            Color.fromRGBO(116, 116, 191, 1.0),
+            Color.fromRGBO(52, 138, 199, 1.0)
+          ]),
+        )
+      ],
+    ).show();
+  }
+
+  void addToWishlist(Book book) async{
+    await DatabaseService.setWishlist(widget.currentUser.uid, book.title, book.toMap());
+
+    var ref2 = await DatabaseService.allWishlistReference();
+    await ref2.child('Books').child(widget.currentUser.email).set(book.toMap());
+  }
+
 }
