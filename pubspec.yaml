@@ -21,7 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-
+  geolocator: ^6.2.0
   flutter_barcode_scanner: ^1.0.2
   flutter:
     sdk: flutter
