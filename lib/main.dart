@@ -14,17 +14,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: title,
-        theme: ThemeData(
-          primarySwatch: Colors.purple,
-          fontFamily: 'Poppins',
-        ),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => LoginPage(),
-          //'/add_isbn': (context) => Page(),
-          //'/add_manual': (context) => Page(),
-        },
-      );
+    debugShowCheckedModeBanner: false,
+    title: title,
+    theme: ThemeData(
+      primarySwatch: Colors.purple,
+      fontFamily: 'Poppins',
+    ),
+    initialRoute: '/',
+    routes: {
+      '/': (context) => LoginPage(),
+      //'/add_isbn': (context) => Page(),
+      //'/add_manual': (context) => Page(),
+    },
+  );
 }
