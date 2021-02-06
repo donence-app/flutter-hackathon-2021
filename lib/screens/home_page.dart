@@ -1,7 +1,9 @@
+import 'package:donence_app/provider/google_sign_in.dart';
 import 'package:donence_app/screens/library_page.dart';
 import 'package:donence_app/screens/search_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -34,6 +36,44 @@ class _HomePageState extends State<HomePage> {
         false;
   }
 
+  void onAddPressed(){
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            color: Color(0xFF737373),
+            height: 180,
+            child: Container(
+              child: _buildAddMenu(),
+              decoration: BoxDecoration(
+                color: Theme.of(context).canvasColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(10),
+                  topRight: const Radius.circular(10),
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  Column _buildAddMenu() {
+    return Column(
+      children: <Widget>[
+        ListTile(
+          leading: Icon(Icons.qr_code),
+          title: Text('Scan book ISBN'),
+          onTap: () => Navigator.of(context).pushNamed('/add_isbn'),
+        ),
+        ListTile(
+          leading: Icon(Icons.edit),
+          title: Text('Add new book manually'),
+          onTap: () => Navigator.of(context).pushNamed('/add_manual'),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -55,9 +95,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onTap(int value) {
-    setState(() {
-      _selectedIndex = value;
-    });
+    if(value == 1){
+      onAddPressed();
+    }else{
+      setState(() {
+        _selectedIndex = value;
+      });
+    }
   }
 
   Widget _appBar() => AppBar(
@@ -87,7 +131,23 @@ class _HomePageState extends State<HomePage> {
               currentAccountPicture:
                   CircleAvatar(backgroundImage: NetworkImage(user.photoURL)),
             ),
-            ListTile(title: Text("SOME FEATURE"), leading: Icon(Icons.ac_unit,),),
+            ListTile(
+              title: Text("SOME FEATURE"),
+              leading: Icon(
+                Icons.ac_unit,
+              ),
+            ),
+            ListTile(
+              title: Text("Log Out"),
+              leading: Icon(
+                Icons.logout,
+              ),
+              onTap: () {
+                final provider =
+                    Provider.of<GoogleSignInProvider>(context, listen: false);
+                provider.logout();
+              },
+            ),
           ],
         ),
       );

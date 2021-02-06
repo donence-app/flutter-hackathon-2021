@@ -17,9 +17,14 @@ class MyApp extends StatelessWidget {
     debugShowCheckedModeBanner: false,
     title: title,
     theme: ThemeData(
-      primarySwatch: Colors.deepOrange,
+      primarySwatch: Colors.purple,
       fontFamily: 'Poppins',
     ),
-    home: LoginPage(),
+    initialRoute: '/',
+    routes: {
+      '/': (context) => LoginPage(),
+      //'/add_isbn': (context) => Page(),
+      //'/add_manual': (context) => Page(),
+    },
   );
 }
