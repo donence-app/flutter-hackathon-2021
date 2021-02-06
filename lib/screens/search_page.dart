@@ -47,16 +47,22 @@ class _SearchPageState extends State<SearchPage> {
     return Container(
       child: Column(
         children: [
-          TextField(
-            controller: _filter,
-            decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search), hintText: "Search..."),
-            // onChanged: (_) {
-            //   _getBooks();
-            // },
-            onSubmitted: (_) {
-              _getBooks();
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _filter,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: "Search...",
+                border: OutlineInputBorder(),
+              ),
+              // onChanged: (_) {
+              //   _getBooks();
+              // },
+              onSubmitted: (_) {
+                _getBooks();
+              },
+            ),
           ),
           Expanded(
             child: _buildList(),
