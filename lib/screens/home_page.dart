@@ -157,10 +157,8 @@ class _HomePageState extends State<HomePage> {
                 provider.logout();
               },
             ),
+            ListTile(title: Text('SOME FEATURE'), leading: Icon(Icons.ac_unit,),),
           ],
         ),
-        ListTile(title: Text('SOME FEATURE'), leading: Icon(Icons.ac_unit,),),
-      ],
-    ),
   );
 }
