@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "937733294949",
+    "project_id": "donenceapp-629dc",
+    "storage_bucket": "donenceapp-629dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937733294949:android:0904061fb6e5e658e2ef8c",
+        "android_client_info": {
+          "package_name": "com.example.donence_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "937733294949-57m8u42gva47ojaobi0d78maevbfhg51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAea9YTLad56z41PcuZWlIav2oHOlsrU0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "937733294949-57m8u42gva47ojaobi0d78maevbfhg51.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
