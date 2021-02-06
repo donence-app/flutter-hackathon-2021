@@ -11,7 +11,7 @@ class Book{
   Book(this.title, this.thumbnail, this.author, this.description, this.page, this.isbn13, this.publisher, this.publish_date);
 
   Map<String, dynamic> toMap() {
-    var map = Map<String, dynamic>();
+    var map = <String, dynamic>{};
     map['title'] = title;
     map['thumbnail'] = thumbnail;
     map['author'] = author;
