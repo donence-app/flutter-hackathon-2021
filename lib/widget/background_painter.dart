@@ -20,7 +20,7 @@ class BackgroundPainter extends CustomPainter {
     ..color = Colors.lightBlue.shade300
     ..style = PaintingStyle.fill,
         greyPaint = Paint()
-          ..color = Colors.blueGrey[900]
+          ..color = Colors.purple[900]
           ..style = PaintingStyle.fill,
         orangePaint = Paint()
           ..color = Colors.orange.shade400
