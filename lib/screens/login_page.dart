@@ -7,7 +7,7 @@ import 'package:donence_app/widget/logged_in_widget.dart';
 import 'package:donence_app/widget/sign_up_widget.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class LoginPage extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
