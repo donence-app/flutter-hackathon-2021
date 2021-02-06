@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
   String _scanBarcode;
 
-   void startBarcodeScanStream() async {
+  void startBarcodeScanStream() async {
     FlutterBarcodeScanner.getBarcodeStreamReceiver(
             '#ff6666', 'Cancel', true, ScanMode.BARCODE)
         .listen((barcode) => print(barcode));
@@ -52,7 +52,6 @@ class _HomePageState extends State<HomePage> {
       _scanBarcode = barcodeScanRes;
     });
   }
-
 
   Future<bool> _onWillPop() {
     return showDialog(
@@ -190,7 +189,11 @@ class _HomePageState extends State<HomePage> {
                 Icons.autorenew,
               ),
               onTap: () {
-                Navigator.of(context).pushNamed('/exchange_books');
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext ctx) =>
+                            ExchangeBooksPage(widget.currentUser)));
               },
             ),
             ListTile(

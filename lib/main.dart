@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
       '/': (context) => LoginPage(),
       //'/add_isbn': (context) => Page(),
       '/add_manual': (context) => AddBookPage(),
-      '/exchange_books': (context) => ExchangeBooksPage(),
     },
   );
 }

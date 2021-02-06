@@ -1,8 +1,14 @@
+import 'package:donence_app/services/database_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location_permissions/location_permissions.dart';
 
 class ExchangeBooksPage extends StatefulWidget {
+  final User currentUser;
+
+  ExchangeBooksPage(this.currentUser);
+
   @override
   _ExchangeBooksPageState createState() => _ExchangeBooksPageState();
 }
@@ -46,6 +52,11 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
     return await Geolocator.getCurrentPosition();
   }
 
+  void addPosToDB(Position p) async {
+    await DatabaseService.setLocation(
+        widget.currentUser.uid, p.longitude.toString(), p.latitude.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,7 +70,9 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
                 _determinePosition().then((value) {
                   print(value);
                   setState(() {
-                    position = value.toString();
+                    Position p = value;
+                    if (p != null) addPosToDB(p);
+                    position = p.toString();
                   });
                 });
               },
