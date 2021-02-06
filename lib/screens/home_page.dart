@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (context) {
           return Container(
-            color: Color(0xFF737373),
+            color: Colors.blueGrey,
             height: 180,
             child: Container(
               child: _buildAddMenu(),
@@ -107,12 +107,12 @@ class _HomePageState extends State<HomePage> {
         ListTile(
           leading: Icon(Icons.search),
           title: Text('Search books by name or ISBN'),
-          onTap: () => Navigator.of(context).pushNamed('/search'),
+          onTap: () => Navigator.of(context).popAndPushNamed('/search'),
         ),
         ListTile(
           leading: Icon(Icons.edit),
           title: Text('Add new book manually'),
-          onTap: () => Navigator.of(context).pushNamed('/add_manual'),
+          onTap: () => Navigator.of(context).popAndPushNamed('/add_manual'),
         ),
       ],
     );
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.book_rounded), label: 'Library'),
           BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: 'Add'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: 'Search'),
+              icon: Icon(Icons.search), label: 'Search'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onTap,
