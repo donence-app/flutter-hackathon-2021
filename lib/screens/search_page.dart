@@ -3,20 +3,22 @@ import 'package:donence_app/services/book_api.dart';
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget {
-  final TextEditingController _filter = TextEditingController();
-
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<Book> books = []; // names we get from API
+  List<Book> books = [];
   final TextEditingController _filter = TextEditingController();
 
-  void _getNames() async {
-    var tempList = await BookAPI.getSearchBooks(_filter.text);
-    setState(() {
-      books = tempList;
+  void _getBooks() async {
+    print(_filter.text);
+    await BookAPI.getSearchBooks(_filter.text).then((value) {
+      if (value == null) return;
+      print(value);
+      setState(() {
+        books = value;
+      });
     });
   }
 
@@ -48,9 +50,12 @@ class _SearchPageState extends State<SearchPage> {
           TextField(
             controller: _filter,
             decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search), hintText: 'Search...'),
-            onChanged: (s) {
-              _getNames();
+                prefixIcon: Icon(Icons.search), hintText: "Search..."),
+            // onChanged: (_) {
+            //   _getBooks();
+            // },
+            onSubmitted: (_) {
+              _getBooks();
             },
           ),
           Expanded(
