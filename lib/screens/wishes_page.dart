@@ -9,7 +9,7 @@ class _WishesPageState extends State<WishesPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Wishes"),
+      child: Text('Wishes'),
     );
   }
 }

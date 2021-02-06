@@ -9,7 +9,7 @@ class _DonationPageState extends State<DonationPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Donation"),
+      child: Text('Donation'),
     );
   }
 }
