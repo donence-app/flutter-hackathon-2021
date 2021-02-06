@@ -6,7 +6,7 @@ class BookAPI {
       'https://www.googleapis.com/books/v1/volumes?q=isbn:';
   static final String urlSearch =
       'https://www.googleapis.com/books/v1/volumes?q=';
-  static final String api_key = 'AIzaSyBKPrJ8ZNhvZj4WrmMAPC4at82sRkXdUN4';
+  static final String api_key = 'AIzaSyBeE1FxYwj1VSVJ_Nk6FfsNM4SJwVjGWYc';
 
   static Future<Book> getIsbnBook(String isbn) async {
     var responseUrl = urlIsbn + isbn;

@@ -1,8 +1,6 @@
-import 'package:donence_app/models/book.dart';
 import 'package:donence_app/provider/google_sign_in.dart';
 import 'package:donence_app/screens/library_page.dart';
 import 'package:donence_app/screens/search_page.dart';
-import 'package:donence_app/services/book_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +9,10 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'dart:async';
 
 class HomePage extends StatefulWidget {
+  final User currentUser;
+
+  HomePage(this.currentUser);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -134,7 +136,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             LibraryPage(),
             Container(),
-            SearchPage(),
+            SearchPage(widget.currentUser),
           ],
         ),
       ),
