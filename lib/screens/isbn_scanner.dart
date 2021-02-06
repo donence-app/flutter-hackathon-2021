@@ -1,22 +1,39 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatefulWidget {
+class Scanner extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _ScannerState createState() => _ScannerState();
 }
 
-class _MyAppState extends State<MyApp> {
-  String _scanBarcode = 'Unknown';
+class _ScannerState extends State<Scanner> {
+  String _scanBarcode;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  void nextPage(BuildContext cx, String barcode) {
+    Navigator.of(cx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return;
+        },
+      ),
+    );
+  }
+
+  void back(BuildContext cx) {
+    Navigator.of(cx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return;
+        },
+      ),
+    );
   }
 
   void startBarcodeScanStream() async {
@@ -26,15 +43,17 @@ class _MyAppState extends State<MyApp> {
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> scanBarcodeNormal() async {
+  Future<void> scanBarcodeNormal(BuildContext cx) async {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
       print(barcodeScanRes);
+      //nextPage(cx, _scanBarcode);
     } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
+      print('Not found!');
+      // back(cx);
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -60,10 +79,8 @@ class _MyAppState extends State<MyApp> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         RaisedButton(
-                            onPressed: () => scanBarcodeNormal(),
+                            onPressed: () => scanBarcodeNormal(context),
                             child: Text('Start barcode scan')),
-                        Text('Scan result : $_scanBarcode\n',
-                            style: TextStyle(fontSize: 20))
                       ]));
             })));
   }

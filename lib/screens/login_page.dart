@@ -42,7 +42,7 @@ class LoginPage extends StatelessWidget {
 
   void addUserDatabase() async{
     await DatabaseService.setUserData(_auth.currentUser.uid, {
-      "Deneme" : "deneme",
+      'Deneme' : 'deneme',
     });
   }
 }
