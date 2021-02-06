@@ -18,4 +18,17 @@ class Book{
   String get isbn13 => _isbn13;
   String get publisher => _publisher;
   String get publish_date => _publish_date;
+
+  Map toMap(){
+    return {
+      'title': title,
+      'thumbnail': thumbnail,
+      'author': author,
+      'description': description,
+      'page': page.toString(),
+      'isbn': isbn13,
+      'publisher': publisher,
+      'publish_date': publish_date
+    };
+  }
 }
