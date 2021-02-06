@@ -21,7 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-
+  shared_preferences: ^0.5.12+4
+  geolocator: ^6.2.0
   flutter_barcode_scanner: ^1.0.2
   flutter:
     sdk: flutter
@@ -38,6 +39,8 @@ dependencies:
   firebase_core: "0.5.3"
   image_picker: ^0.6.7+13
   dio: ^3.0.10
+  location_permissions: ^3.0.0+1
+  rflutter_alert: ^1.0.2
 
 dev_dependencies:
 
