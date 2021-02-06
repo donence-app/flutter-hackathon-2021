@@ -35,6 +35,11 @@ class LoggedInWidget extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
           SizedBox(height: 8),
+          Text(
+            'Uid: ' + user.uid,
+            style: TextStyle(color: Colors.white),
+          ),
+          SizedBox(height: 8),
           ElevatedButton(
             onPressed: () {
               final provider =

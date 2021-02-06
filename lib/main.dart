@@ -1,4 +1,4 @@
-import 'package:donence_app/ui/screens/home_screen.dart';
+import 'package:donence_app/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -20,6 +20,6 @@ class MyApp extends StatelessWidget {
       primarySwatch: Colors.deepOrange,
       fontFamily: 'Poppins',
     ),
-    home: HomePage(),
+    home: LoginPage(),
   );
 }
