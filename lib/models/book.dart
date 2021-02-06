@@ -12,25 +12,25 @@ class Book{
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
-    map["title"] = title;
-    map["thumbnail"] = thumbnail;
-    map["author"] = author;
-    map["description"] = description;
-    map["page"] = page;
-    map["isbn13"] = isbn13;
-    map["publisher"] = publisher;
-    map["publish_date"] = publish_date;
+    map['title'] = title;
+    map['thumbnail'] = thumbnail;
+    map['author'] = author;
+    map['description'] = description;
+    map['page'] = page;
+    map['isbn13'] = isbn13;
+    map['publisher'] = publisher;
+    map['publish_date'] = publish_date;
     return map;
   }
 
   Book.fromMap(Map<String, dynamic> map) {
-    title = map["title"];
-    thumbnail = map["thumbnail"];
-    author = map["author"];
-    description = map["description"];
-    page = map["page"];
-    isbn13 = map["isbn13"];
-    publisher = map["publisher"];
-    publish_date = map["publish_date"];
+    title = map['title'];
+    thumbnail = map['thumbnail'];
+    author = map['author'];
+    description = map['description'];
+    page = map['page'];
+    isbn13 = map['isbn13'];
+    publisher = map['publisher'];
+    publish_date = map['publish_date'];
   }
 }
