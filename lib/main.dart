@@ -20,6 +20,11 @@ class MyApp extends StatelessWidget {
       primarySwatch: Colors.purple,
       fontFamily: 'Poppins',
     ),
-    home: HomePage(),
+    initialRoute: '/',
+    routes: {
+      '/': (context) => LoginPage(),
+      //'/add_isbn': (context) => Page(),
+      //'/add_manual': (context) => Page(),
+    },
   );
 }
