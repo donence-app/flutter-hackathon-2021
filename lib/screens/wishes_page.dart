@@ -1,11 +1,8 @@
 import 'package:donence_app/models/book.dart';
 import 'package:donence_app/services/database_service.dart';
+import 'package:donence_app/widget/book_card_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
-
-import 'package:random_color/random_color.dart';
 
 class WishesPage extends StatefulWidget {
   @override
@@ -14,20 +11,6 @@ class WishesPage extends StatefulWidget {
 
 class _WishesPageState extends State<WishesPage> {
   final ref = DatabaseService.allWishListReference();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    /*ref.once().then((DataSnapshot snapshot){
-      Map data = snapshot.value;
-      data.forEach((key, value) {
-        print(key);
-        print(value);
-      });
-    });*/
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,25 +50,7 @@ class _WishesPageState extends State<WishesPage> {
                 itemCount: listBook.length,
                 itemExtent: 120,
                 itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          border: Border(right: BorderSide(color: RandomColor().randomColor(), width: 5))
-                      ),
-                      child: Center(
-                        child: ListTile(
-                          leading: Image.network(
-                            listBook[index].thumbnail,
-                            fit: BoxFit.fitHeight,
-                          ),
-                          title: Text(listBook[index].title),
-                          subtitle: Text(listBook[index].author),
-                          onTap: () => {},
-                        ),
-                      ),
-                    ),
-                  );
+                  return BookCard(listBook[index]);
                 },
               );
             }
