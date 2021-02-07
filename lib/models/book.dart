@@ -36,11 +36,11 @@ class Book {
   }
 
   String getTitleShort() {
-    return (title.length < 60) ? title : (title.substring(0, 60) + "...");
+    return (title.length < 60) ? title : (title.substring(0, 60) + '...');
   }
 
   String getAuthorShort() {
-    return (title.length < 40) ? title : (title.substring(0, 40) + "...");
+    return (title.length < 40) ? title : (title.substring(0, 40) + '...');
   }
 
 }

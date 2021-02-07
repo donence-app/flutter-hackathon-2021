@@ -36,7 +36,7 @@ class _BooksPageState extends State<BooksPage> {
                     String title = value['title'] ?? '';
                     String thumbnail = value['thumbnail'] ?? '';;
                     String author = value['author'] ?? '';;
-                    String description = name ?? '';;
+                    var description = name ?? '';;
                     int page = value['page'] ?? 0;
                     String isbn13 = value['isbn13'] ?? '';;
                     String publisher = value['publisher'] ?? '';;

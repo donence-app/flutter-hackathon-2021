@@ -9,8 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'dart:async';
 import 'package:donence_app/services/book_api.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'add_book_page.dart';
-import 'package:donence_app/models/book.dart';
 
 class HomePage extends StatefulWidget {
   final User currentUser;
@@ -24,8 +24,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final user = FirebaseAuth.instance.currentUser;
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String _scanBarcode;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void startBarcodeScanStream() async {
     FlutterBarcodeScanner.getBarcodeStreamReceiver(
@@ -107,7 +106,10 @@ class _HomePageState extends State<HomePage> {
         ListTile(
           leading: Icon(Icons.qr_code),
           title: Text('Scan book ISBN'),
-          onTap: () => scanBarcodeNormal(context),
+          onTap: () {
+            Navigator.of(context).pop();
+            scanBarcodeNormal(context);
+          },
         ),
         ListTile(
           leading: Icon(Icons.edit),
@@ -208,10 +210,12 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              title: Text('SOME FEATURE'),
-              leading: Icon(
-                Icons.ac_unit,
-              ),
+              leading: Icon(Icons.feedback),
+              title: Text('Support and Feedback'),
+              onTap: () {
+                Navigator.pop(context);
+                launch('mailto:donenceapp@gmail.com');
+              },
             ),
           ],
         ),
