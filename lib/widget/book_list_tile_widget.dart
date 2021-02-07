@@ -28,7 +28,7 @@ class BookListTileWidget extends StatelessWidget {
               fit: BoxFit.fitHeight,
             ),
             title: Text(book.getTitleShort()),
-            subtitle: Text(book.author),
+            subtitle: Text(book.getAuthorShort()),
             onTap: onPressed,
           ),
         ),

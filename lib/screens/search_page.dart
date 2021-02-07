@@ -17,6 +17,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   List<Book> books = [];
+  bool _loading = false;
   final TextEditingController _filter = TextEditingController();
 
   void _getBooks() async {
@@ -25,22 +26,30 @@ class _SearchPageState extends State<SearchPage> {
       if (value == null) return;
       //print(value);
       setState(() {
+        _loading = false;
         books = value;
       });
     });
   }
 
   Widget _buildList() {
-    return ListView.builder(
-      itemCount: (books == null) ? 0 : books.length,
-      itemExtent: 120,
-      itemBuilder: (BuildContext context, int index) {
-        return BookListTileWidget(
-          book: books[index],
-          onPressed: () => tapTheBook(index),
-        );
-      },
-    );
+    return _loading
+        ? Transform.scale(
+      scale: 0.2,
+          child: FittedBox(
+              child: CircularProgressIndicator(),
+            ),
+        )
+        : ListView.builder(
+            itemCount: (books == null) ? 0 : books.length,
+            itemExtent: 120,
+            itemBuilder: (BuildContext context, int index) {
+              return BookListTileWidget(
+                book: books[index],
+                onPressed: () => tapTheBook(index),
+              );
+            },
+          );
   }
 
   @override
@@ -61,6 +70,9 @@ class _SearchPageState extends State<SearchPage> {
               //   _getBooks();
               // },
               onSubmitted: (_) {
+                setState(() {
+                  _loading = true;
+                });
                 _getBooks();
               },
             ),
