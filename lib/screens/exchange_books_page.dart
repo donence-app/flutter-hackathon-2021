@@ -20,6 +20,13 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isLoaded = false;
 
+  @override
+  @protected
+  void initState() {
+    _getLocation();
+    super.initState();
+  }
+
   void _showMessage(var ctx, String msg) {
     _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(msg)));
   }
@@ -30,8 +37,7 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      _showMessage(
-          ctx, 'Location services are disabled. Please enable it.');
+      _showMessage(ctx, 'Location services are disabled. Please enable it.');
       return await Geolocator.getLastKnownPosition();
     }
 
@@ -64,15 +70,12 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
 
   void _getAddressFromLatLng(Position p) async {
     try {
+      var placemarks = await placemarkFromCoordinates(p.latitude, p.longitude);
 
-      List<Placemark> placemarks = await placemarkFromCoordinates(p.latitude, p.longitude);
-
-      Placemark place = placemarks[0];
-
+      var place = placemarks[0];
 
       setState(() {
-        _currentAddress =
-            "${place.street}, ${place.administrativeArea}";
+        _currentAddress = "${place.street}, ${place.administrativeArea}";
       });
     } catch (e) {
       print(e);
@@ -99,18 +102,7 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
         title: Text('Exchange Books'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _determinePosition(context).then((value) {
-            print(value);
-            setState(() {
-              Position p = value;
-              if (p != null) addPosToDB(p);
-              isLoaded = true;
-              _position = p.toString();
-              _getAddressFromLatLng(p);
-            });
-          });
-        },
+        onPressed: () => _getLocation(),
         child: Icon(Icons.autorenew),
       ),
       // key: _scaffoldKey,
@@ -118,12 +110,27 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
         children: [
           Card(
             child: ListTile(
-                  leading: Icon(Icons.location_on_outlined),
-                  title: isLoaded ? Text('${_currentAddress}') : _buildAnimatedPlaceHolder(),
+              leading: Icon(Icons.location_on_outlined),
+              title: isLoaded
+                  ? Text('${_currentAddress}')
+                  : _buildAnimatedPlaceHolder(),
             ),
           ),
         ],
       ),
     ));
+  }
+
+  void _getLocation() {
+    _determinePosition(context).then((value) {
+      print(value);
+      setState(() {
+        Position p = value;
+        if (p != null) addPosToDB(p);
+        isLoaded = true;
+        _position = p.toString();
+        _getAddressFromLatLng(p);
+      });
+    });
   }
 }
