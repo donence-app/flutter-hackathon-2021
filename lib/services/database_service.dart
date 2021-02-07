@@ -54,6 +54,10 @@ class DatabaseService {
     return ref.child('AllDonationlist');
   }
 
+  static DatabaseReference usersReference(){
+    return ref.child('Users');
+  }
+
   static void setDonationlist(String uid, String title, Map map) async{
     await ref.child('Users').child(uid).child('Donationlist').child(title).set(map);
   }
