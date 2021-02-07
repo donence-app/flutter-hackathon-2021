@@ -21,7 +21,7 @@ class _AddBookPageState extends State<AddBookPage> {
 
   final picker = ImagePicker();
 
-  _getImage(ImageSource imageSource) async {
+  Future<void> _getImage(ImageSource imageSource) async {
     PickedFile imageFile = await picker.getImage(source: imageSource);
     if (imageFile == null) return;
     setState(
@@ -51,9 +51,10 @@ class _AddBookPageState extends State<AddBookPage> {
           key: _formKey,
           child: Column(
             children: <Widget>[
+              _imageFormField(_thumbnail, 'Cover (optional)'),
               TextFormField(
                 decoration: InputDecoration(
-                  labelText: 'Title',
+                  labelText: 'Title*',
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
@@ -67,7 +68,7 @@ class _AddBookPageState extends State<AddBookPage> {
               ),
               TextFormField(
                 decoration: InputDecoration(
-                  labelText: 'Author',
+                  labelText: 'Author*',
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
@@ -85,7 +86,8 @@ class _AddBookPageState extends State<AddBookPage> {
                   labelText: 'ISBN',
                 ),
                 validator: (value) {
-                  if (value.length != 13 && value.length != 10) {
+                  if (value.isNotEmpty &&
+                      (value.length != 13 && value.length != 10)) {
                     return 'Invalid ISBN';
                   }
                   return null;
@@ -99,12 +101,6 @@ class _AddBookPageState extends State<AddBookPage> {
                 decoration: InputDecoration(
                   labelText: 'Page',
                 ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter Page';
-                  }
-                  return null;
-                },
                 onSaved: (val) {
                   _page = int.parse(val);
                 },
@@ -113,68 +109,31 @@ class _AddBookPageState extends State<AddBookPage> {
                 decoration: InputDecoration(
                   labelText: 'Publisher',
                 ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter Publisher';
-                  }
-                  return null;
-                },
                 onSaved: (val) {
                   _publisher = val;
                 },
               ),
               TextFormField(
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'Publish Year',
                 ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter Publish Year';
-                  }
-                  return null;
-                },
                 onSaved: (val) {
                   _publish_date = val;
                 },
               ),
               TextFormField(
                 minLines: 2,
-                maxLines: 5,
+                maxLines: 6,
                 decoration: InputDecoration(
                   labelText: 'Comment',
                   icon: Icon(Icons.comment),
                 ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter Comment';
-                  }
-                  return null;
-                },
                 onSaved: (val) {
                   _comment = val;
                 },
               ),
               Padding(padding: EdgeInsets.all(16)),
-              Row(
-                children: [
-                  SizedBox(
-                    child:
-                        Image.asset(_thumbnail ?? 'assets/images/placeholder.png'),
-                    width: MediaQuery.of(context).size.width / 5,
-                  ),
-                  Expanded(
-                    child: ListTile(
-                      leading: Icon(Icons.add_photo_alternate_outlined),
-                      trailing: Icon(Icons.arrow_drop_down),
-                      title: Text('Cover (optional)'),
-                      onTap: () {
-                        onCoverPressed();
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              Padding(padding: EdgeInsets.all(10)),
             ],
           ),
         ),
@@ -243,6 +202,43 @@ class _AddBookPageState extends State<AddBookPage> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
+      ),
+    );
+  }
+  
+  Widget _placeHolder(double width, double height) {
+    return Container(
+      alignment: Alignment.center,
+      width: width,
+      height: height,
+      child: Icon(Icons.add_photo_alternate_outlined),
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, style: BorderStyle.solid),
+      ),
+    );
+  }
+  
+  Widget _imageFormField(String image, String title){
+    var _width = MediaQuery.of(context).size.width / 10;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          SizedBox(
+            child: image == null
+                ? _placeHolder(_width * 3, _width * 4)
+                : Image.asset(image, width: _width * 3,),
+          ),
+          Expanded(
+            child: ListTile(
+              trailing: Icon(Icons.arrow_drop_down),
+              title: Text(title),
+              onTap: () {
+                onCoverPressed();
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
