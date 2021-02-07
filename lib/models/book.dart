@@ -39,8 +39,17 @@ class Book {
     return (title.length < 60) ? title : (title.substring(0, 60) + '...');
   }
 
+  @override
+  bool operator ==(Object other) =>
+      other is Book &&
+          title == other.title &&
+          author == other.author;
+
+  @override
+  int get hashCode => title.hashCode ^ author.hashCode;
+
   String getAuthorShort() {
-    return (title.length < 40) ? title : (title.substring(0, 40) + '...');
+    return (author.length < 40) ? author : (author.substring(0, 40) + '...');
   }
 
 }

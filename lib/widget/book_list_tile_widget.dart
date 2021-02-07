@@ -23,8 +23,8 @@ class BookListTileWidget extends StatelessWidget {
         child: Center(
           child: ListTile(
             leading: book.thumbnail.startsWith('http') ? Image.network(book.thumbnail) : Image.asset(book.thumbnail),
-            title: Text(book.title),
-            subtitle: Text(book.author),
+            title: Text(book.getTitleShort()),
+            subtitle: Text(book.getAuthorShort()),
             onTap: onPressed,
           ),
         ),

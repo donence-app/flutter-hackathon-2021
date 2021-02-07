@@ -80,8 +80,9 @@ class _BooksPageState extends State<BooksPage> {
           ]),
           onPressed: () {
             final snackBar = SnackBar(content: Text('The book has been successfully deleted.'));
+            var email = FirebaseAuth.instance.currentUser.email.replaceAll('.', '?');
 
-            DatabaseService.deleteBooks(FirebaseAuth.instance.currentUser.uid, title);
+            DatabaseService.deleteBooks(email, title);
             DatabaseService.deleteAllBooks(FirebaseAuth.instance.currentUser.displayName, title);
             Navigator.pop(context);
             Scaffold.of(context).showSnackBar(snackBar);
@@ -110,8 +111,10 @@ class _BooksPageState extends State<BooksPage> {
   }
 
   void addToDonationlist(Book book) async {
+    var email = FirebaseAuth.instance.currentUser.email.replaceAll('.', '?');
+
     await DatabaseService.setDonationlist(
-        FirebaseAuth.instance.currentUser.uid, book.title, book.toMap());
+        email, book.title, book.toMap());
   }
 
   void addToAllDonationlist(Book book) async {

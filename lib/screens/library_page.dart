@@ -16,7 +16,7 @@ class _LibraryPageState extends State<LibraryPage> {
       child: Scaffold(
         appBar: AppBar(
           leading: Container(),
-          backgroundColor: Colors.purple[900],
+          backgroundColor: Color(0xff966fd6), //Colors.purple[900],
           flexibleSpace: SafeArea(
             child: Container(
               height: kToolbarHeight,

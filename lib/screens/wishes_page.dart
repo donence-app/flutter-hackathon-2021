@@ -35,18 +35,12 @@ class _WishesPageState extends State<WishesPage> {
                   val.forEach((key, value) {
                     String title = value['title'] ?? '';
                     String thumbnail = value['thumbnail'] ?? '';
-                    ;
                     String author = value['author'] ?? '';
-                    ;
                     var description = name ?? '';
-                    ;
                     int page = value['page'] ?? 0;
                     String isbn13 = value['isbn13'] ?? '';
-                    ;
                     String publisher = value['publisher'] ?? '';
-                    ;
                     String publish_date = value['publish_date'] ?? '';
-                    ;
 
                     var x = Book(title, thumbnail, author, description, page,
                         isbn13, publisher, publish_date);
@@ -86,8 +80,9 @@ class _WishesPageState extends State<WishesPage> {
           ]),
           onPressed: () {
             final snackBar = SnackBar(content: Text('The book has been successfully deleted.'));
+            var email = FirebaseAuth.instance.currentUser.email.replaceAll('.', '?');
 
-            DatabaseService.deleteWishList(FirebaseAuth.instance.currentUser.uid, title);
+            DatabaseService.deleteWishList(email, title);
             DatabaseService.deleteAllWishlist(FirebaseAuth.instance.currentUser.displayName, title);
             Navigator.pop(context);
             Scaffold.of(context).showSnackBar(snackBar);
