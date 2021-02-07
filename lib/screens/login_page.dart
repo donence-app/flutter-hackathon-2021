@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
           if (provider.isSigningIn) {
             return buildLoading();
           } else if (snapshot.hasData) {
-            addUserDatabase();
+            //addUserDatabase();
             return HomePage(FirebaseAuth.instance.currentUser);
           } else {
             return SignUpWidget();
@@ -38,10 +38,4 @@ class LoginPage extends StatelessWidget {
       Center(child: CircularProgressIndicator()),
     ],
   );
-
-  void addUserDatabase() async{
-    await DatabaseService.setUserData(_auth.currentUser.uid, {
-      'Deneme' : 'deneme',
-    });
-  }
 }

@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context) {
           return Container(
             color: Colors.blueGrey,
-            height: 180,
+            height: 120,
             child: Container(
               child: _buildAddMenu(),
               decoration: BoxDecoration(
@@ -104,11 +104,6 @@ class _HomePageState extends State<HomePage> {
           leading: Icon(Icons.qr_code),
           title: Text('Scan book ISBN'),
           onTap: () => scanBarcodeNormal(),
-        ),
-        ListTile(
-          leading: Icon(Icons.search),
-          title: Text('Search books by name or ISBN'),
-          onTap: () => Navigator.of(context).popAndPushNamed('/search'),
         ),
         ListTile(
           leading: Icon(Icons.edit),
