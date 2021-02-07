@@ -1,3 +1,5 @@
+import 'package:donence_app/services/database_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:donence_app/models/book.dart';
 import 'package:image_picker/image_picker.dart';
@@ -225,15 +227,18 @@ class _AddBookPageState extends State<AddBookPage> {
         onPressed: () {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
+            var book = Book(_title, _thumbnail, _author, _description, _page, _isbn13, _publisher, _publish_date);
             print(
                 'BOOK => ${Book(_title, _thumbnail, _author, _description, _page, _isbn13, _publisher, _publish_date).toMap()}');
             print('COMMENT => $_comment');
             if (isDonation) {
-              //TODO:save to donation
+              addToDonationlist(book);
+              addToAllDonationlist(book);
+              addToBooks(book);
             } else {
-              //TODO:save to books
+              addToBooks(book);
             }
-            //Navigator.pop(context);
+            Navigator.pop(context);
           }
         },
         child: Padding(
@@ -245,6 +250,20 @@ class _AddBookPageState extends State<AddBookPage> {
         ),
       ),
     );
+  }
+
+  void addToDonationlist(Book book) async {
+    await DatabaseService.setDonationlist(
+        FirebaseAuth.instance.currentUser.uid, book.title, book.toMap());
+  }
+
+  void addToAllDonationlist(Book book) async {
+    await DatabaseService.setAllDonationlist(
+        FirebaseAuth.instance.currentUser.displayName, book.title, book.toMap());
+  }
+
+  void addToBooks(Book book) async{
+    await DatabaseService.setBooks(FirebaseAuth.instance.currentUser.uid, book.title, book.toMap());
   }
 
   Widget _placeHolder(double width, double height) {
