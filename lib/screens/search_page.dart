@@ -1,10 +1,10 @@
 import 'package:donence_app/models/book.dart';
 import 'package:donence_app/services/book_api.dart';
 import 'package:donence_app/services/database_service.dart';
+import 'package:donence_app/widget/book_list_tile_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'dart:math' as math;
 
 class SearchPage extends StatefulWidget {
   final User currentUser;
@@ -35,24 +35,9 @@ class _SearchPageState extends State<SearchPage> {
       itemCount: (books == null) ? 0 : books.length,
       itemExtent: 120,
       itemBuilder: (BuildContext context, int index) {
-        return Card(
-          child: Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                border: Border(right: BorderSide(color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0), width: 5))
-            ),
-            child: Center(
-              child: ListTile(
-                leading: Image.network(
-                  books[index].thumbnail,
-                  fit: BoxFit.fitHeight,
-                ),
-                title: Text(books[index].title),
-                subtitle: Text(books[index].author),
-                onTap: () => tapTheBook(index),
-              ),
-            ),
-          ),
+        return BookListTileWidget(
+          book: books[index],
+          onPressed: () => tapTheBook(index),
         );
       },
     );
@@ -88,25 +73,36 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  void tapTheBook(int index){
+  void tapTheBook(int index) {
     Alert(
       context: context,
       content: Column(
         children: [
-          Text('Author: ' + books[index].author,style: TextStyle(fontSize: 13.5),),
-          SizedBox(height: 15,),
+          Text(
+            'Author: ' + books[index].author,
+            style: TextStyle(fontSize: 13.5),
+          ),
+          SizedBox(
+            height: 15,
+          ),
           Image.network(
             books[index].thumbnail,
             height: 120,
             fit: BoxFit.fitHeight,
           ),
-          SizedBox(height: 10,),
-          books[index].description != null ? Text('Description: ' + books[index].description,style: TextStyle(fontSize: 13.5),) : SizedBox(),
+          SizedBox(
+            height: 10,
+          ),
+          books[index].description != null
+              ? Text(
+                  'Description: ' + books[index].description,
+                  style: TextStyle(fontSize: 13.5),
+                )
+              : SizedBox(),
         ],
       ),
       title: books[index].title,
       buttons: [
-
         DialogButton(
           child: Text(
             'Add to Wishlist',
@@ -126,12 +122,13 @@ class _SearchPageState extends State<SearchPage> {
     ).show();
   }
 
-  void addToWishlist(Book book) async{
-    await DatabaseService.setWishlist(widget.currentUser.uid, book.title, book.toMap());
+  void addToWishlist(Book book) async {
+    await DatabaseService.setWishlist(
+        widget.currentUser.uid, book.title, book.toMap());
   }
 
-  void addToAllWishlist(Book book) async{
-    await DatabaseService.setAllWishlist(widget.currentUser.displayName, book.title, book.toMap());
+  void addToAllWishlist(Book book) async {
+    await DatabaseService.setAllWishlist(
+        widget.currentUser.displayName, book.title, book.toMap());
   }
-
 }

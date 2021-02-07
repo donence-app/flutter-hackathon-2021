@@ -41,6 +41,8 @@ dependencies:
   dio: ^3.0.10
   location_permissions: ^3.0.0+1
   rflutter_alert: ^1.0.2
+  geocoding: ^1.0.5
+  flutter_placeholder_textlines: ^1.0.4
 
 dev_dependencies:
 

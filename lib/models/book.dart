@@ -1,4 +1,4 @@
-class Book{
+class Book {
   String title;
   String thumbnail;
   String author;
@@ -8,7 +8,8 @@ class Book{
   String publisher;
   String publish_date;
 
-  Book(this.title, this.thumbnail, this.author, this.description, this.page, this.isbn13, this.publisher, this.publish_date);
+  Book(this.title, this.thumbnail, this.author, this.description, this.page,
+      this.isbn13, this.publisher, this.publish_date);
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{};
@@ -32,5 +33,9 @@ class Book{
     isbn13 = map['isbn13'];
     publisher = map['publisher'];
     publish_date = map['publish_date'];
+  }
+
+  String getTitleShort() {
+    return (title.length < 90) ? title : (title.substring(0, 90) + "...");
   }
 }
