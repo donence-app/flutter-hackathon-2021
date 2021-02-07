@@ -11,7 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ExchangeBooksPage extends StatefulWidget {
   final User currentUser;
   final double MAX_PERIMETER =
-  100000; //FIXME: intentional high perimeter for debug
+      100000; //FIXME: intentional high perimeter for debug
 
   ExchangeBooksPage(this.currentUser);
 
@@ -39,7 +39,7 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
     Map data = snapshot.data.snapshot.value;
     data.forEach((key, value) {
       String uid = key;
-      if (uid == widget.currentUser.uid) {
+      if (uid != widget.currentUser.uid) {
         Map val = value;
         if (val['location'] != null) {
           var longitude = double.parse(val['location']['longitude']);
@@ -62,15 +62,8 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
                 String publisher = value['publisher'] ?? '';
                 String publish_date = value['publish_date'] ?? '';
 
-                var x = Book(
-                    title,
-                    thumbnail,
-                    author,
-                    description,
-                    page,
-                    isbn13,
-                    publisher,
-                    publish_date);
+                var x = Book(title, thumbnail, author, description, page,
+                    isbn13, publisher, publish_date);
                 listBook.add(x);
               });
               userUids[uid + ', ' + distance.round().toString() + 'm away'] =
@@ -122,7 +115,9 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
 
   void addPosToDB(Position p) async {
     await DatabaseService.setLocation(
-        widget.currentUser.email.replaceAll('.', '?'), p.longitude.toString(), p.latitude.toString());
+        widget.currentUser.email.replaceAll('.', '?'),
+        p.longitude.toString(),
+        p.latitude.toString());
   }
 
   void _getAddressFromLatLng(Position p) async {
@@ -151,7 +146,7 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
   }
 
   String getMail(String s) {
-    return  s.replaceAll('?', '.').substring(0,s.indexOf(','));
+    return s.replaceAll('?', '.').substring(0, s.indexOf(','));
   }
 
   String getText(String s) {
@@ -161,72 +156,115 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
   Widget _buildExchangeList() {
     return !isLoaded
         ? Transform.scale(
-        scale: 0.2, child: FittedBox(child: CircularProgressIndicator()))
+            scale: 0.2, child: FittedBox(child: CircularProgressIndicator()))
         : Container(
-      child: StreamBuilder(
-        stream: usersRef.onValue,
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error');
-          } else if (snapshot.data == null) {
-            return Text('');
-          } else {
-            var userDonationMap =
-            _getUsersInPerimeter(widget.MAX_PERIMETER, snapshot);
+            child: StreamBuilder(
+              stream: usersRef.onValue,
+              builder: (BuildContext context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error');
+                } else if (snapshot.data == null) {
+                  return Text('');
+                } else {
+                  var wishList = <Book>[];
 
-            var listAll = [];
-            userDonationMap.forEach((key, value) {
-              listAll.add(key);
-              List<Book> l = value;
-              listAll.addAll(l);
-            });
+                  final allWishRef = DatabaseService.allWishListReference();
+                  allWishRef.once().then((data) {
+                    data.value.forEach((key, value) {
+                      String name = key;
+                      Map val = value;
 
-            return ListView.builder(
-                itemCount: listAll.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return (listAll[index] is String)
-                      ? InkWell(
-                      onTap: ()  => launch('mailto:'+getMail(listAll[index])),
-                      child: Center(
-                        child: Text(
-                          getText(listAll[index]),
-                        ),
-                      ))
-                      : BookListTileWidget(book: listAll[index]);
-                });
-          }
-        },
-      ),
-    );
+                      if (FirebaseAuth.instance.currentUser.displayName ==
+                          name) {
+                        val.forEach((key, value) {
+                          String title = value['title'] ?? '';
+                          String thumbnail = value['thumbnail'] ?? '';
+                          String author = value['author'] ?? '';
+                          var description = name ?? '';
+                          int page = value['page'] ?? 0;
+                          String isbn13 = value['isbn13'] ?? '';
+                          String publisher = value['publisher'] ?? '';
+                          String publish_date = value['publish_date'] ?? '';
+
+                          var x = Book(title, thumbnail, author, description,
+                              page, isbn13, publisher, publish_date);
+                          wishList.add(x);
+                        });
+                      }
+                    });
+                    print(wishList);
+                  });
+
+                  var userDonationMap =
+                      _getUsersInPerimeter(widget.MAX_PERIMETER, snapshot);
+
+                  var listAll = [];
+                  userDonationMap.forEach((key, value) {
+                    listAll.add(key);
+                    List<Book> l = value;
+
+                    // var delete = <Book>[];
+                    //
+                    // for(var i = 0; i < l.length; i++) {
+                    //   if (!wishList.contains(l[i])) {
+                    //     delete.add(l[i]);
+                    //   }
+                    // }
+                    //
+                    // for(var i = 0; i < delete.length; i++) {
+                    //   l.remove(delete[i]);
+                    // }
+
+                    listAll.addAll(l);
+                  });
+
+                  return ListView.builder(
+                      itemCount: listAll.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return (listAll[index] is String)
+                            ? InkWell(
+                                onTap: () =>
+                                    launch('mailto:' + getMail(listAll[index])),
+                                child: Center(
+                                  child: Text(
+                                    getText(listAll[index]),
+                                  ),
+                                ))
+                            : BookListTileWidget(book: listAll[index]);
+                      });
+                }
+              },
+            ),
+          );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Scaffold(
-          key: _scaffoldKey,
-          appBar: AppBar(
-            title: Text('Exchange Books'),
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text('Exchange Books'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _getLocation(),
+        child: Icon(Icons.autorenew),
+      ),
+      // key: _scaffoldKey,
+      body: Column(
+        children: [
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.location_on_outlined),
+              title: isLoaded
+                  ? Text('${_currentAddress}')
+                  : _buildAnimatedPlaceHolder(),
+            ),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => _getLocation(),
-            child: Icon(Icons.autorenew),
-          ),
-          // key: _scaffoldKey,
-          body: Column(
-            children: [
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.location_on_outlined),
-                  title: isLoaded
-                      ? Text('${_currentAddress}')
-                      : _buildAnimatedPlaceHolder(),
-                ),
-              ),
-              Expanded(child: _buildExchangeList()),
-            ],
-          ),
-        ));
+          Expanded(child: _buildExchangeList()),
+        ],
+      ),
+    ));
   }
 
   void _getLocation() async {
