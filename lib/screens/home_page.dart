@@ -107,7 +107,10 @@ class _HomePageState extends State<HomePage> {
         ListTile(
           leading: Icon(Icons.qr_code),
           title: Text('Scan book ISBN'),
-          onTap: () => scanBarcodeNormal(context),
+          onTap: () {
+            Navigator.of(context).pop();
+            scanBarcodeNormal(context);
+          },
         ),
         ListTile(
           leading: Icon(Icons.edit),
