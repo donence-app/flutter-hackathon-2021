@@ -1,15 +1,46 @@
-class Book{
-  final String _title;
-  final String _thumbnail;
-  final String _author;
-  final String _description;
-  final int _page;
+class Book {
+  String title;
+  String thumbnail;
+  String author;
+  String description;
+  int page;
+  String isbn13;
+  String publisher;
+  String publish_date;
 
-  Book(this._title, this._thumbnail, this._author, this._description, this._page);
+  Book(this.title, this.thumbnail, this.author, this.description, this.page,
+      this.isbn13, this.publisher, this.publish_date);
 
-  String get title => _title;
-  String get thumbnail => _thumbnail;
-  String get author => _author;
-  String get description => _description;
-  int get page => _page;
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{};
+    map['title'] = title;
+    map['thumbnail'] = thumbnail;
+    map['author'] = author;
+    map['description'] = description;
+    map['page'] = page;
+    map['isbn13'] = isbn13;
+    map['publisher'] = publisher;
+    map['publish_date'] = publish_date;
+    return map;
+  }
+
+  Book.fromMap(Map<String, dynamic> map) {
+    title = map['title'];
+    thumbnail = map['thumbnail'];
+    author = map['author'];
+    description = map['description'];
+    page = map['page'];
+    isbn13 = map['isbn13'];
+    publisher = map['publisher'];
+    publish_date = map['publish_date'];
+  }
+
+  String getTitleShort() {
+    return (title.length < 60) ? title : (title.substring(0, 60) + "...");
+  }
+
+  String getAuthorShort() {
+    return (title.length < 40) ? title : (title.substring(0, 40) + "...");
+  }
+
 }

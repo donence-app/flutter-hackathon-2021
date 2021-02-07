@@ -22,13 +22,13 @@ class _LibraryPageState extends State<LibraryPage> {
               child: TabBar(
                 tabs: [
                   Tab(
-                    text: "Books",
+                    text: 'Books',
                   ),
                   Tab(
-                    text: "Wishes",
+                    text: 'My Wishlist',
                   ),
                   Tab(
-                    text: "Donation",
+                    text: 'Donation',
                   ),
                 ],
               ),

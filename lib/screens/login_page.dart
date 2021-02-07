@@ -1,9 +1,9 @@
+import 'package:donence_app/screens/home_page.dart';
 import 'package:donence_app/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:donence_app/provider/google_sign_in.dart';
 import 'package:donence_app/widget/background_painter.dart';
-import 'package:donence_app/widget/logged_in_widget.dart';
 import 'package:donence_app/widget/sign_up_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -21,8 +21,8 @@ class LoginPage extends StatelessWidget {
           if (provider.isSigningIn) {
             return buildLoading();
           } else if (snapshot.hasData) {
-            addUserDatabase();
-            return LoggedInWidget();
+            //addUserDatabase();
+            return HomePage(FirebaseAuth.instance.currentUser);
           } else {
             return SignUpWidget();
           }
@@ -38,10 +38,4 @@ class LoginPage extends StatelessWidget {
       Center(child: CircularProgressIndicator()),
     ],
   );
-
-  void addUserDatabase() async{
-    await DatabaseService.setUserData(_auth.currentUser.uid, {
-      "Deneme" : "deneme",
-    });
-  }
 }
