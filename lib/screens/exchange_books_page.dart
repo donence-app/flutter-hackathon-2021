@@ -76,7 +76,7 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
                 _determinePosition(context).then((value) {
                   print(value);
                   setState(() {
-                    Position p = value;
+                    var p = value;
                     if (p != null) addPosToDB(p);
                     position = p.toString();
                   });
