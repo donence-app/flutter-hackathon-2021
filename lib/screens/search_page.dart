@@ -63,7 +63,7 @@ class _SearchPageState extends State<SearchPage> {
               controller: _filter,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
-                hintText: "Search...",
+                hintText: 'Search...',
                 border: OutlineInputBorder(),
               ),
               // onChanged: (_) {
