@@ -36,7 +36,15 @@ class DatabaseService {
     await ref.child('Users').child(uid).child('Donationlist').child(title).set(map);
   }
 
+  static DatabaseReference allBooksReference(){
+    return ref.child('AllBooks');
+  }
+
   static void setBooks(String uid, String title, Map map) async{
     await ref.child('Users').child(uid).child('Books').child(title).set(map);
+  }
+
+  static void setAllBooks(String name, String title, Map map) async{
+    await ref.child('AllBooks').child(name).child(title).set(map);
   }
 }
