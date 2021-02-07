@@ -4,6 +4,7 @@ import 'package:donence_app/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'dart:math' as math;
 
 class SearchPage extends StatefulWidget {
   final User currentUser;
@@ -32,17 +33,25 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildList() {
     return ListView.builder(
       itemCount: (books == null) ? 0 : books.length,
-      itemExtent: 150,
+      itemExtent: 120,
       itemBuilder: (BuildContext context, int index) {
         return Card(
-          child: ListTile(
-            leading: Image.network(
-              books[index].thumbnail,
-              fit: BoxFit.fitHeight,
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                border: Border(right: BorderSide(color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0), width: 5))
             ),
-            title: Text(books[index].title),
-            subtitle: Text(books[index].author),
-            onTap: () => tapTheBook(index),
+            child: Center(
+              child: ListTile(
+                leading: Image.network(
+                  books[index].thumbnail,
+                  fit: BoxFit.fitHeight,
+                ),
+                title: Text(books[index].title),
+                subtitle: Text(books[index].author),
+                onTap: () => tapTheBook(index),
+              ),
+            ),
           ),
         );
       },
