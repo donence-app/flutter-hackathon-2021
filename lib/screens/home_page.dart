@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
         elevation: _selectedIndex == 0 ? 0 : 4,
         centerTitle: true,
         title: Text('Donence'),
-        backgroundColor: Colors.purple[900],
+        backgroundColor: Color(0xff966fd6)//Colors.purple[900],
       );
 
   Widget _bottomBar() => BottomNavigationBar(
@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage> {
         currentIndex: _selectedIndex,
         onTap: _onTap,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.purple[900],
+        selectedItemColor: Color(0xff966fd6),//Colors.purple[900],
       );
 
   Widget _drawer() => Drawer(
@@ -219,7 +219,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Spacer(),
             ListTile(
-              leading: Image.asset('assets/images/donence_logo.png'),
+              leading: Image.asset('assets/images/donence_logo.png',),
               title: Text('Donence v0.0.1'),
             ),
             Padding(padding: EdgeInsets.all(4))
