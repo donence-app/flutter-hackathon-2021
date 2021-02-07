@@ -33,11 +33,12 @@ class _AddBookPageState extends State<AddBookPage> {
 
   Future<void> _getImage(ImageSource imageSource) async {
     var imageFile = await picker.getImage(
-        source: imageSource, maxWidth: 360, maxHeight: 640);
+        source: imageSource, maxWidth: 180, maxHeight: 240);
     if (imageFile == null) return;
     setState(
       () {
         _thumbnail = imageFile.path;
+        // print('get image:' + _thumbnail);
       },
     );
   }
@@ -45,7 +46,7 @@ class _AddBookPageState extends State<AddBookPage> {
   @override
   Widget build(BuildContext context) {
     //print(nBook != null ? nBook.toMap() : 'nBook null');
-    if (nBook != null) {
+    if (nBook != null && _thumbnail == null) { //is image comes from barcode scanner
       _thumbnail = nBook.thumbnail;
     }
     return Scaffold(
@@ -227,7 +228,8 @@ class _AddBookPageState extends State<AddBookPage> {
         onPressed: () {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            var book = Book(_title, _thumbnail, _author, _description, _page, _isbn13, _publisher, _publish_date);
+            var book = Book(_title, _thumbnail, _author, _description, _page,
+                _isbn13, _publisher, _publish_date);
             print(
                 'BOOK => ${Book(_title, _thumbnail, _author, _description, _page, _isbn13, _publisher, _publish_date).toMap()}');
             print('COMMENT => $_comment');
@@ -255,28 +257,36 @@ class _AddBookPageState extends State<AddBookPage> {
   }
 
   void addToDonationlist(Book book) async {
+    var email = FirebaseAuth.instance.currentUser.email.replaceAll('.', '?');
+
     await DatabaseService.setDonationlist(
-        FirebaseAuth.instance.currentUser.uid, book.title, book.toMap());
+        email, book.title, book.toMap());
   }
 
   void addToAllDonationlist(Book book) async {
     await DatabaseService.setAllDonationlist(
-        FirebaseAuth.instance.currentUser.displayName, book.title, book.toMap());
+        FirebaseAuth.instance.currentUser.displayName,
+        book.title,
+        book.toMap());
   }
 
-  void addToBooks(Book book) async{
-    await DatabaseService.setBooks(FirebaseAuth.instance.currentUser.uid, book.title, book.toMap());
+  void addToBooks(Book book) async {
+    var email = FirebaseAuth.instance.currentUser.email.replaceAll('.', '?');
+
+    await DatabaseService.setBooks(
+        email, book.title, book.toMap());
   }
 
-  void addToAllBooks(Book book) async{
-    await DatabaseService.setAllBooks(FirebaseAuth.instance.currentUser.displayName, book.title, book.toMap());
+  void addToAllBooks(Book book) async {
+    await DatabaseService.setAllBooks(
+        FirebaseAuth.instance.currentUser.displayName,
+        book.title,
+        book.toMap());
   }
 
-  Widget _placeHolder(double width, double height) {
+  Widget _placeHolder() {
     return Container(
       alignment: Alignment.center,
-      width: width,
-      height: height,
       child: Icon(Icons.add_photo_alternate_outlined),
       decoration: BoxDecoration(
         border: Border.all(width: 1, style: BorderStyle.solid),
@@ -286,7 +296,7 @@ class _AddBookPageState extends State<AddBookPage> {
 
   Widget _imageFormField(String image, String title) {
     var _width = MediaQuery.of(context).size.width / 10;
-    //print('image: $image');
+    // print('displaying image: "$image"');
     //print('bool: ${image != null ? image.startsWith('http') : false}');
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -294,8 +304,10 @@ class _AddBookPageState extends State<AddBookPage> {
         children: [
           InkWell(
             child: SizedBox(
-                child: image == null
-                    ? _placeHolder(_width * 3, _width * 4)
+                width: _width * 3,
+                height: _width * 4,
+                child: (image == null || image == '')
+                    ? _placeHolder()
                     : image.startsWith('http')
                         ? Image.network(image)
                         : Image.asset(image)),

@@ -63,7 +63,7 @@ class _SearchPageState extends State<SearchPage> {
               controller: _filter,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
-                hintText: "Search...",
+                hintText: 'Search...',
                 border: OutlineInputBorder(),
               ),
               // onChanged: (_) {
@@ -135,8 +135,10 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void addToWishlist(Book book) async {
+    var email = FirebaseAuth.instance.currentUser.email.replaceAll('.', '?');
+
     await DatabaseService.setWishlist(
-        widget.currentUser.uid, book.title, book.toMap());
+        email, book.title, book.toMap());
   }
 
   void addToAllWishlist(Book book) async {

@@ -1,6 +1,5 @@
 import 'package:donence_app/models/book.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 import 'package:random_color/random_color.dart';
 
@@ -23,12 +22,9 @@ class BookListTileWidget extends StatelessWidget {
                     width: 5))),
         child: Center(
           child: ListTile(
-            leading: Image.network(
-              book.thumbnail,
-              fit: BoxFit.fitHeight,
-            ),
-            title: Text(book.getTitleShort()),
-            subtitle: Text(book.getAuthorShort()),
+            leading: book.thumbnail.startsWith('http') ? Image.network(book.thumbnail) : Image.asset(book.thumbnail),
+            title: Text(book.title),
+            subtitle: Text(book.author),
             onTap: onPressed,
           ),
         ),

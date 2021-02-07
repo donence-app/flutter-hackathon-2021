@@ -13,11 +13,25 @@ class DatabaseService {
   }
 
   static void setWishlist(String uid, String title, Map map) async{
-    await ref.child('Users').child(uid).child('Wishlist').child(title).set(map);
+    try {
+      print(uid);
+      await ref.child('Users').child(uid).child('Wishlist').child(title).set(
+          map);
+    } catch(e){
+      print(e);
+    }
+  }
+
+  static void deleteWishList(String uid, String title) async{
+    await ref.child('Users').child(uid).child('Wishlist').child(title).remove();
   }
 
   static void setAllWishlist(String name, String title, Map map) async{
     await ref.child('AllWishlist').child(name).child(title).set(map);
+  }
+
+  static void deleteAllWishlist(String name, String title) async{
+    await ref.child('AllWishlist').child(name).child(title).remove();
   }
 
   static DatabaseReference allWishListReference(){
@@ -28,12 +42,28 @@ class DatabaseService {
     await ref.child('AllDonationlist').child(name).child(title).set(map);
   }
 
+  static void deleteAllDonationlist(String name, String title) async{
+    await ref.child('AllDonationlist').child(name).child(title).remove();
+  }
+
+  static void deleteAllBooks(String name, String title) async{
+    await ref.child('AllBooks').child(name).child(title).remove();
+  }
+
   static DatabaseReference allDonationlistReference(){
     return ref.child('AllDonationlist');
   }
 
+  static DatabaseReference usersReference(){
+    return ref.child('Users');
+  }
+
   static void setDonationlist(String uid, String title, Map map) async{
     await ref.child('Users').child(uid).child('Donationlist').child(title).set(map);
+  }
+
+  static void deleteDonationlist(String uid, String title) async{
+    await ref.child('Users').child(uid).child('Donationlist').child(title).remove();
   }
 
   static DatabaseReference allBooksReference(){
@@ -46,5 +76,9 @@ class DatabaseService {
 
   static void setAllBooks(String name, String title, Map map) async{
     await ref.child('AllBooks').child(name).child(title).set(map);
+  }
+
+  static void deleteBooks(String uid, String title) async{
+    await ref.child('Users').child(uid).child('Books').child(title).remove();
   }
 }
