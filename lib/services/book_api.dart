@@ -24,14 +24,19 @@ class BookAPI {
     try {
       var volumeInfo = response.data['items'][0]['volumeInfo'];
 
-      title = volumeInfo['title'];
-      thumbnail = volumeInfo['imageLinks']['thumbnail'];
-      author = volumeInfo['authors'][0];
-      description = volumeInfo['description'];
-      page = volumeInfo['pageCount'];
-      isbn13 = volumeInfo['industryIdentifiers'][1]['identifier'];
-      publisher = volumeInfo['publisher'];
-      publish_date = volumeInfo['publishedDate'];
+      title = volumeInfo['title'] ?? '';
+      if (volumeInfo['imageLinks'] != null) {
+        thumbnail = volumeInfo['imageLinks']['thumbnail'] ?? '';
+      } else {
+        thumbnail = '';
+      }
+
+      author = volumeInfo['authors'][0] ?? '';
+      description = volumeInfo['description'] ?? '';
+      page = volumeInfo['pageCount'] ?? '';
+      isbn13 = volumeInfo['industryIdentifiers'][1]['identifier'] ?? '';
+      publisher = volumeInfo['publisher'] ?? '';
+      publish_date = volumeInfo['publishedDate'] ?? '';
 
       return Book(title, thumbnail, author, description, page, isbn13,
           publisher, publish_date);

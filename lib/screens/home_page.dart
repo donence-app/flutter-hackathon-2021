@@ -8,6 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'dart:async';
+import 'package:donence_app/services/book_api.dart';
+import 'add_book_page.dart';
+import 'package:donence_app/models/book.dart';
 
 class HomePage extends StatefulWidget {
   final User currentUser;
@@ -21,7 +24,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final user = FirebaseAuth.instance.currentUser;
-  String _scanBarcode;
 
   void startBarcodeScanStream() async {
     FlutterBarcodeScanner.getBarcodeStreamReceiver(
@@ -30,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> scanBarcodeNormal() async {
+  Future<void> scanBarcodeNormal(BuildContext cx) async {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
@@ -46,11 +48,12 @@ class _HomePageState extends State<HomePage> {
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
-    if (!mounted) return;
+    // if (!mounted) return;
 
-    setState(() {
-      _scanBarcode = barcodeScanRes;
-    });
+    var book = await BookAPI.getIsbnBook(barcodeScanRes);
+
+    await Navigator.push(
+        cx, MaterialPageRoute(builder: (cx) => AddBookPage(book: book)));
   }
 
   Future<bool> _onWillPop() {
@@ -102,7 +105,7 @@ class _HomePageState extends State<HomePage> {
         ListTile(
           leading: Icon(Icons.qr_code),
           title: Text('Scan book ISBN'),
-          onTap: () => scanBarcodeNormal(),
+          onTap: () => scanBarcodeNormal(context),
         ),
         ListTile(
           leading: Icon(Icons.edit),
@@ -160,8 +163,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.book_rounded), label: 'Library'),
           BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: 'Add'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onTap,
