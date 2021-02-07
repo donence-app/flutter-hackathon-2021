@@ -4,7 +4,9 @@ import 'package:image_picker/image_picker.dart';
 
 class AddBookPage extends StatefulWidget {
   final Book book;
+
   AddBookPage({this.book});
+
   @override
   _AddBookPageState createState() => _AddBookPageState(nBook: book);
 }
@@ -21,13 +23,15 @@ class _AddBookPageState extends State<AddBookPage> {
   String _publisher;
   String _publish_date;
   String _comment;
+  bool isDonation = false;
 
   final picker = ImagePicker();
 
   _AddBookPageState({this.nBook});
 
   Future<void> _getImage(ImageSource imageSource) async {
-    var imageFile = await picker.getImage(source: imageSource);
+    var imageFile = await picker.getImage(
+        source: imageSource, maxWidth: 360, maxHeight: 640);
     if (imageFile == null) return;
     setState(
       () {
@@ -38,6 +42,10 @@ class _AddBookPageState extends State<AddBookPage> {
 
   @override
   Widget build(BuildContext context) {
+    //print(nBook != null ? nBook.toMap() : 'nBook null');
+    if (nBook != null) {
+      _thumbnail = nBook.thumbnail;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Book'),
@@ -111,7 +119,11 @@ class _AddBookPageState extends State<AddBookPage> {
                   labelText: 'Page',
                 ),
                 onSaved: (val) {
-                  _page = int.parse(val);
+                  if (val == null || val == '') {
+                    _page = 0;
+                  } else {
+                    _page = int.parse(val);
+                  }
                 },
               ),
               TextFormField(
@@ -145,6 +157,16 @@ class _AddBookPageState extends State<AddBookPage> {
                 },
               ),
               Padding(padding: EdgeInsets.all(16)),
+              CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text('Add to Donation?'),
+                value: isDonation,
+                onChanged: (value) {
+                  setState(() {
+                    isDonation = value;
+                  });
+                },
+              ),
             ],
           ),
         ),
@@ -179,12 +201,18 @@ class _AddBookPageState extends State<AddBookPage> {
         ListTile(
           leading: Icon(Icons.image),
           title: Text('Select from gallery'),
-          onTap: () => _getImage(ImageSource.gallery),
+          onTap: () {
+            Navigator.of(context).pop();
+            _getImage(ImageSource.gallery);
+          },
         ),
         ListTile(
           leading: Icon(Icons.camera_alt),
           title: Text('Take a picture'),
-          onTap: () => _getImage(ImageSource.camera),
+          onTap: () {
+            Navigator.of(context).pop();
+            _getImage(ImageSource.camera);
+          },
         ),
       ],
     );
@@ -200,10 +228,12 @@ class _AddBookPageState extends State<AddBookPage> {
             print(
                 'BOOK => ${Book(_title, _thumbnail, _author, _description, _page, _isbn13, _publisher, _publish_date).toMap()}');
             print('COMMENT => $_comment');
-
-            //TODO: store book to database
-
-            Navigator.pop(context);
+            if (isDonation) {
+              //TODO:save to donation
+            } else {
+              //TODO:save to books
+            }
+            //Navigator.pop(context);
           }
         },
         child: Padding(
@@ -231,17 +261,20 @@ class _AddBookPageState extends State<AddBookPage> {
 
   Widget _imageFormField(String image, String title) {
     var _width = MediaQuery.of(context).size.width / 10;
+    //print('image: $image');
+    //print('bool: ${image != null ? image.startsWith('http') : false}');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
-          SizedBox(
-            child: image == null
-                ? _placeHolder(_width * 3, _width * 4)
-                : Image.asset(
-                    image,
-                    width: _width * 3,
-                  ),
+          InkWell(
+            child: SizedBox(
+                child: image == null
+                    ? _placeHolder(_width * 3, _width * 4)
+                    : image.startsWith('http')
+                        ? Image.network(image)
+                        : Image.asset(image)),
+            onTap: () => onCoverPressed(),
           ),
           Expanded(
             child: ListTile(
