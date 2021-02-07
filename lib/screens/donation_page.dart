@@ -80,8 +80,9 @@ class _DonationPageState extends State<DonationPage> {
           ]),
           onPressed: () {
             final snackBar = SnackBar(content: Text('The book has been successfully deleted.'));
+            var email = FirebaseAuth.instance.currentUser.email.replaceAll('.', '?');
 
-            DatabaseService.deleteDonationlist(FirebaseAuth.instance.currentUser.uid, title);
+            DatabaseService.deleteDonationlist(email, title);
             DatabaseService.deleteAllDonationlist(FirebaseAuth.instance.currentUser.displayName, title);
             Navigator.pop(context);
             Scaffold.of(context).showSnackBar(snackBar);
