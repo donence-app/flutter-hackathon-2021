@@ -80,8 +80,9 @@ class _WishesPageState extends State<WishesPage> {
           ]),
           onPressed: () {
             final snackBar = SnackBar(content: Text('The book has been successfully deleted.'));
+            var email = FirebaseAuth.instance.currentUser.email.replaceAll('.', '?');
 
-            DatabaseService.deleteWishList(FirebaseAuth.instance.currentUser.uid, title);
+            DatabaseService.deleteWishList(email, title);
             DatabaseService.deleteAllWishlist(FirebaseAuth.instance.currentUser.displayName, title);
             Navigator.pop(context);
             Scaffold.of(context).showSnackBar(snackBar);
