@@ -30,8 +30,11 @@ class BookAPI {
       } else {
         thumbnail = '';
       }
-
-      author = volumeInfo['authors'][0] ?? '';
+      if (volumeInfo['authors'] != null) {
+        author = volumeInfo['authors'][0] ?? '';
+      } else {
+        author = '';
+      }
       description = volumeInfo['description'] ?? '';
       page = volumeInfo['pageCount'] ?? '';
       isbn13 = volumeInfo['industryIdentifiers'][1]['identifier'] ?? '';

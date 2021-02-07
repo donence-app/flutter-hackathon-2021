@@ -23,4 +23,20 @@ class DatabaseService {
   static DatabaseReference allWishListReference(){
     return ref.child('AllWishlist');
   }
+
+  static void setAllDonationlist(String name, String title, Map map) async{
+    await ref.child('AllDonationlist').child(name).child(title).set(map);
+  }
+
+  static DatabaseReference allDonationlistReference(){
+    return ref.child('AllDonationlist');
+  }
+
+  static void setDonationlist(String uid, String title, Map map) async{
+    await ref.child('Users').child(uid).child('Donationlist').child(title).set(map);
+  }
+
+  static void setBooks(String uid, String title, Map map) async{
+    await ref.child('Users').child(uid).child('Books').child(title).set(map);
+  }
 }
