@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_placeholder_textlines/flutter_placeholder_textlines.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ExchangeBooksPage extends StatefulWidget {
   final User currentUser;
   final double MAX_PERIMETER =
-      100000; //FIXME: intentional high perimeter for debug
+  100000; //FIXME: intentional high perimeter for debug
 
   ExchangeBooksPage(this.currentUser);
 
@@ -60,8 +61,15 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
               String publisher = value['publisher'] ?? '';
               String publish_date = value['publish_date'] ?? '';
 
-              var x = Book(title, thumbnail, author, description, page, isbn13,
-                  publisher, publish_date);
+              var x = Book(
+                  title,
+                  thumbnail,
+                  author,
+                  description,
+                  page,
+                  isbn13,
+                  publisher,
+                  publish_date);
               listBook.add(x);
             });
             userUids[uid] = listBook;
@@ -139,80 +147,80 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
     );
   }
 
-  Widget _buildUserDonationListWidget(String uid, List<Book> books) {
-    return Container(
-      child: ListView.builder(
-          itemCount: books.length,
-          itemBuilder: (BuildContext context, int index) {
-            return BookListTileWidget(
-              book: books[index],
-              onPressed: () {},
-            );
-          }),
-    );
+  String getMail(String s) {
+    return s.replaceAll('?', '.');
   }
 
   Widget _buildExchangeList() {
     return !isLoaded
         ? Transform.scale(
-            scale: 0.2, child: FittedBox(child: CircularProgressIndicator()))
+        scale: 0.2, child: FittedBox(child: CircularProgressIndicator()))
         : Container(
-            child: StreamBuilder(
-              stream: usersRef.onValue,
-              builder: (BuildContext context, snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error');
-                } else if (snapshot.data == null) {
-                  return Text('');
-                } else {
-                  var userDonationMap =
-                      _getUsersInPerimeter(widget.MAX_PERIMETER, snapshot);
+      child: StreamBuilder(
+        stream: usersRef.onValue,
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('Error');
+          } else if (snapshot.data == null) {
+            return Text('');
+          } else {
+            var userDonationMap =
+            _getUsersInPerimeter(widget.MAX_PERIMETER, snapshot);
 
-                  var listAll = [];
-                  userDonationMap.forEach((key, value) {
-                    // listAll.add("+ " + key);
-                    List<Book> l = value;
-                    listAll.addAll(l);
-                  });
+            var listAll = [];
+            userDonationMap.forEach((key, value) {
+              listAll.add(key);
+              List<Book> l = value;
+              listAll.addAll(l);
+            });
 
-                  return ListView.builder(
-                      itemCount: listAll.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return BookListTileWidget(book: listAll[index]);
-                      });
-                }
-              },
-            ),
-          );
+            return ListView.builder(
+                itemCount: listAll.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return (listAll[index] is String)
+                      ? InkWell(
+                      onTap: ()  => launch('mailto:'+getMail(listAll[index])),
+                      child: Center(
+                        child: Text(
+                          getMail(listAll[index]),
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ))
+                      : BookListTileWidget(book: listAll[index]);
+                });
+          }
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text('Exchange Books'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _getLocation(),
-        child: Icon(Icons.autorenew),
-      ),
-      // key: _scaffoldKey,
-      body: Column(
-        children: [
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.location_on_outlined),
-              title: isLoaded
-                  ? Text('${_currentAddress}')
-                  : _buildAnimatedPlaceHolder(),
-            ),
+          key: _scaffoldKey,
+          appBar: AppBar(
+            title: Text('Exchange Books'),
           ),
-          Expanded(child: _buildExchangeList()),
-        ],
-      ),
-    ));
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => _getLocation(),
+            child: Icon(Icons.autorenew),
+          ),
+          // key: _scaffoldKey,
+          body: Column(
+            children: [
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.location_on_outlined),
+                  title: isLoaded
+                      ? Text('${_currentAddress}')
+                      : _buildAnimatedPlaceHolder(),
+                ),
+              ),
+              Expanded(child: _buildExchangeList()),
+            ],
+          ),
+        ));
   }
 
   void _getLocation() async {
