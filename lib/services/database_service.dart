@@ -13,7 +13,13 @@ class DatabaseService {
   }
 
   static void setWishlist(String uid, String title, Map map) async{
-    await ref.child('Users').child(uid).child('Wishlist').child(title).set(map);
+    try {
+      print(uid);
+      await ref.child('Users').child(uid).child('Wishlist').child(title).set(
+          map);
+    } catch(e){
+      print(e);
+    }
   }
 
   static void deleteWishList(String uid, String title) async{
