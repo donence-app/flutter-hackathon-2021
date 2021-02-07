@@ -40,6 +40,7 @@ class _SearchPageState extends State<SearchPage> {
             leading: Image.network(
               books[index].thumbnail,
               fit: BoxFit.fitHeight,
+              width: 100,
             ),
             title: Text(books[index].title),
             subtitle: Text(books[index].author),

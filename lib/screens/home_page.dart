@@ -21,6 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final user = FirebaseAuth.instance.currentUser;
+  var _scaffoldKey = new GlobalKey<ScaffoldState>();
   String _scanBarcode;
 
   void startBarcodeScanStream() async {
@@ -128,6 +129,7 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: _appBar(),
         drawer: _drawer(),
         bottomNavigationBar: _bottomBar(),
@@ -193,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(
                         builder: (BuildContext ctx) =>
-                            ExchangeBooksPage(widget.currentUser)));
+                            ExchangeBooksPage(widget.currentUser),),);
               },
             ),
             ListTile(
