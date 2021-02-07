@@ -121,14 +121,14 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
       var place = placemarks[0];
 
       setState(() {
-        _currentAddress = "${place.street}, ${place.administrativeArea}";
+        _currentAddress = '${place.street}, ${place.administrativeArea}';
       });
     } catch (e) {
       print(e);
     }
   }
 
-  _buildAnimatedPlaceHolder() {
+  Widget _buildAnimatedPlaceHolder() {
     return Container(
       width: 300,
       child: PlaceholderLines(
@@ -219,7 +219,7 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
     await _determinePosition(context).then((value) {
       print(value);
       setState(() {
-        Position p = value;
+        var p = value;
         if (p != null) addPosToDB(p);
         isLoaded = true;
         _position = p;

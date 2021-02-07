@@ -16,8 +16,16 @@ class DatabaseService {
     await ref.child('Users').child(uid).child('Wishlist').child(title).set(map);
   }
 
+  static void deleteWishList(String uid, String title) async{
+    await ref.child('Users').child(uid).child('Wishlist').child(title).remove();
+  }
+
   static void setAllWishlist(String name, String title, Map map) async{
     await ref.child('AllWishlist').child(name).child(title).set(map);
+  }
+
+  static void deleteAllWishlist(String name, String title) async{
+    await ref.child('AllWishlist').child(name).child(title).remove();
   }
 
   static DatabaseReference allWishListReference(){
@@ -26,6 +34,14 @@ class DatabaseService {
 
   static void setAllDonationlist(String name, String title, Map map) async{
     await ref.child('AllDonationlist').child(name).child(title).set(map);
+  }
+
+  static void deleteAllDonationlist(String name, String title) async{
+    await ref.child('AllDonationlist').child(name).child(title).remove();
+  }
+
+  static void deleteAllBooks(String name, String title) async{
+    await ref.child('AllBooks').child(name).child(title).remove();
   }
 
   static DatabaseReference allDonationlistReference(){
@@ -40,6 +56,10 @@ class DatabaseService {
     await ref.child('Users').child(uid).child('Donationlist').child(title).set(map);
   }
 
+  static void deleteDonationlist(String uid, String title) async{
+    await ref.child('Users').child(uid).child('Donationlist').child(title).remove();
+  }
+
   static DatabaseReference allBooksReference(){
     return ref.child('AllBooks');
   }
@@ -50,5 +70,9 @@ class DatabaseService {
 
   static void setAllBooks(String name, String title, Map map) async{
     await ref.child('AllBooks').child(name).child(title).set(map);
+  }
+
+  static void deleteBooks(String uid, String title) async{
+    await ref.child('Users').child(uid).child('Books').child(title).remove();
   }
 }

@@ -15,6 +15,7 @@ class _LibraryPageState extends State<LibraryPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          leading: Container(),
           backgroundColor: Colors.purple[900],
           flexibleSpace: SafeArea(
             child: Container(
@@ -25,10 +26,10 @@ class _LibraryPageState extends State<LibraryPage> {
                     text: 'Books',
                   ),
                   Tab(
-                    text: 'My Wishlist',
+                    text: 'Wishlist',
                   ),
                   Tab(
-                    text: 'Donation',
+                    text: 'Donationlist',
                   ),
                 ],
               ),

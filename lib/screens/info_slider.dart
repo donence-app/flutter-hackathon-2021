@@ -25,7 +25,7 @@ class _SliderLayoutViewState extends State<SliderLayoutView> {
     _pageController.dispose();
   }
 
-   _onPageChanged(int index) {
+   void _onPageChanged(int index) {
     setState(() {
       _currentPage = index;
       print(_currentPage);
