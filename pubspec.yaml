@@ -44,6 +44,7 @@ dependencies:
   geocoding: ^1.0.5
   flutter_placeholder_textlines: ^1.0.4
   random_color: ^1.0.5
+  url_launcher: ^5.7.10
 
 dev_dependencies:
 
