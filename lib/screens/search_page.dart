@@ -2,7 +2,6 @@ import 'package:donence_app/models/book.dart';
 import 'package:donence_app/services/book_api.dart';
 import 'package:donence_app/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -20,10 +19,10 @@ class _SearchPageState extends State<SearchPage> {
   final TextEditingController _filter = TextEditingController();
 
   void _getBooks() async {
-    print(_filter.text);
+    //print(_filter.text);
     await BookAPI.getSearchBooks(_filter.text).then((value) {
       if (value == null) return;
-      print(value);
+      //print(value);
       setState(() {
         books = value;
       });
@@ -106,6 +105,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           onPressed: () {
             addToWishlist(books[index]);
+            addToAllWishlist(books[index]);
             Navigator.pop(context);
           },
           gradient: LinearGradient(colors: [
@@ -119,9 +119,10 @@ class _SearchPageState extends State<SearchPage> {
 
   void addToWishlist(Book book) async{
     await DatabaseService.setWishlist(widget.currentUser.uid, book.title, book.toMap());
+  }
 
-    var ref2 = await DatabaseService.allWishlistReference();
-    await ref2.child('Books').child(widget.currentUser.email).set(book.toMap());
+  void addToAllWishlist(Book book) async{
+    await DatabaseService.setAllWishlist(widget.currentUser.displayName, book.title, book.toMap());
   }
 
 }
