@@ -14,22 +14,22 @@ class Slider {
 final sliderArrayList = [
   Slider(
       sliderImageUrl: 'assets/images/slider_1.png',
-      sliderHeading: 'Your bin is special',
+      sliderHeading: 'Your books are special',
       sliderSubHeading:
-          'Open the app and scan the bin. Then document the throw and gain points.'),
+          'Donence, stores your wishes. Then match with donations and keeps reading greener.'),
   Slider(
       sliderImageUrl: 'assets/images/slider_2.png',
-      sliderHeading: 'Scan the product',
+      sliderHeading: 'Scan the book',
       sliderSubHeading:
-          'Not sure where to put a pizza box ? Enter the name and let the app do the work for you.'),
+          'Donence, will find your book from millions of publication. List the books you have read, donate and save nature. Improve literacy rate!'),
   Slider(
       sliderImageUrl: 'assets/images/slider_3.png',
-      sliderHeading: 'Set your goals',
+      sliderHeading: 'Match with those nearby',
       sliderSubHeading:
-          'Set recycling goals and achieve the greatness in the bin world. Your group can impact the world !'),
+          'All things work anonymous, find donations, get wishes. Information increases as it is shared. You can change the world!'),
   Slider(
       sliderImageUrl: 'assets/images/slider_4.png',
-      sliderHeading: 'Follow your statistics',
+      sliderHeading: 'Create your Library',
       sliderSubHeading:
-          'It\'s more fun when you can measure your impact on the environment. Track your habits and improvements.'),
+          'It\'s fun as crazy when you follow your library with smart classification. Track your readings, get motivated.'),
 ];
