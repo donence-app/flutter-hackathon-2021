@@ -257,8 +257,10 @@ class _AddBookPageState extends State<AddBookPage> {
   }
 
   void addToDonationlist(Book book) async {
+    var email = FirebaseAuth.instance.currentUser.email.replaceAll('.', '?');
+
     await DatabaseService.setDonationlist(
-        FirebaseAuth.instance.currentUser.uid, book.title, book.toMap());
+        email, book.title, book.toMap());
   }
 
   void addToAllDonationlist(Book book) async {
@@ -269,8 +271,10 @@ class _AddBookPageState extends State<AddBookPage> {
   }
 
   void addToBooks(Book book) async {
+    var email = FirebaseAuth.instance.currentUser.email.replaceAll('.', '?');
+
     await DatabaseService.setBooks(
-        FirebaseAuth.instance.currentUser.uid, book.title, book.toMap());
+        email, book.title, book.toMap());
   }
 
   void addToAllBooks(Book book) async {
