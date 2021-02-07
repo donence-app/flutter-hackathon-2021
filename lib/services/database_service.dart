@@ -20,7 +20,7 @@ class DatabaseService {
     await ref.child('AllWishlist').child(name).child(title).set(map);
   }
 
-  static Future<DatabaseReference> allWishListReference() async{
-    return await ref.child('AllWishlist');
+  static DatabaseReference allWishListReference(){
+    return ref.child('AllWishlist');
   }
 }

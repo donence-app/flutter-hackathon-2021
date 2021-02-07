@@ -19,10 +19,10 @@ class _SearchPageState extends State<SearchPage> {
   final TextEditingController _filter = TextEditingController();
 
   void _getBooks() async {
-    print(_filter.text);
+    //print(_filter.text);
     await BookAPI.getSearchBooks(_filter.text).then((value) {
       if (value == null) return;
-      print(value);
+      //print(value);
       setState(() {
         books = value;
       });
