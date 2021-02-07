@@ -3,11 +3,14 @@ import 'package:donence_app/models/book.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddBookPage extends StatefulWidget {
+  final Book book;
+  AddBookPage({this.book});
   @override
-  _AddBookPageState createState() => _AddBookPageState();
+  _AddBookPageState createState() => _AddBookPageState(nBook: book);
 }
 
 class _AddBookPageState extends State<AddBookPage> {
+  final Book nBook;
   final _formKey = GlobalKey<FormState>();
   String _title;
   String _thumbnail;
@@ -21,8 +24,10 @@ class _AddBookPageState extends State<AddBookPage> {
 
   final picker = ImagePicker();
 
+  _AddBookPageState({this.nBook});
+
   Future<void> _getImage(ImageSource imageSource) async {
-    PickedFile imageFile = await picker.getImage(source: imageSource);
+    var imageFile = await picker.getImage(source: imageSource);
     if (imageFile == null) return;
     setState(
       () {
@@ -53,6 +58,7 @@ class _AddBookPageState extends State<AddBookPage> {
             children: <Widget>[
               _imageFormField(_thumbnail, 'Cover (optional)'),
               TextFormField(
+                initialValue: nBook == null ? '' : nBook.title,
                 decoration: InputDecoration(
                   labelText: 'Title*',
                 ),
@@ -67,6 +73,7 @@ class _AddBookPageState extends State<AddBookPage> {
                 },
               ),
               TextFormField(
+                initialValue: nBook == null ? '' : nBook.author,
                 decoration: InputDecoration(
                   labelText: 'Author*',
                 ),
@@ -81,6 +88,7 @@ class _AddBookPageState extends State<AddBookPage> {
                 },
               ),
               TextFormField(
+                initialValue: nBook == null ? '' : nBook.isbn13,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'ISBN',
@@ -97,6 +105,7 @@ class _AddBookPageState extends State<AddBookPage> {
                 },
               ),
               TextFormField(
+                initialValue: nBook == null ? '' : nBook.page.toString(),
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'Page',
@@ -106,6 +115,7 @@ class _AddBookPageState extends State<AddBookPage> {
                 },
               ),
               TextFormField(
+                initialValue: nBook == null ? '' : nBook.publisher,
                 decoration: InputDecoration(
                   labelText: 'Publisher',
                 ),
@@ -114,6 +124,7 @@ class _AddBookPageState extends State<AddBookPage> {
                 },
               ),
               TextFormField(
+                initialValue: nBook == null ? '' : nBook.publish_date,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'Publish Year',
@@ -205,7 +216,7 @@ class _AddBookPageState extends State<AddBookPage> {
       ),
     );
   }
-  
+
   Widget _placeHolder(double width, double height) {
     return Container(
       alignment: Alignment.center,
@@ -217,8 +228,8 @@ class _AddBookPageState extends State<AddBookPage> {
       ),
     );
   }
-  
-  Widget _imageFormField(String image, String title){
+
+  Widget _imageFormField(String image, String title) {
     var _width = MediaQuery.of(context).size.width / 10;
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -227,7 +238,10 @@ class _AddBookPageState extends State<AddBookPage> {
           SizedBox(
             child: image == null
                 ? _placeHolder(_width * 3, _width * 4)
-                : Image.asset(image, width: _width * 3,),
+                : Image.asset(
+                    image,
+                    width: _width * 3,
+                  ),
           ),
           Expanded(
             child: ListTile(

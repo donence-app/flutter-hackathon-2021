@@ -47,12 +47,9 @@ class _WishesPageState extends State<WishesPage> {
 
                 val.forEach((key, value) {
                   String title = value['title'] ?? '';
-                  String thumbnail = value['thumbnail'] ?? '';
-                  ;
-                  String author = value['author'] ?? '';
-                  ;
-                  String description = name ?? '';
-                  ;
+                  String thumbnail = value['thumbnail'] ?? '';;
+                  String author = value['author'] ?? '';;
+                  var description = name ?? '';;
                   int page = value['page'] ?? 0;
                   String isbn13 = value['isbn13'] ?? '';
                   ;
