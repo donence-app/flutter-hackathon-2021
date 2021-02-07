@@ -28,7 +28,7 @@ final sliderArrayList = [
       sliderSubHeading:
           'Set recycling goals and achieve the greatness in the bin world. Your group can impact the world !'),
   Slider(
-      sliderImageUrl: 'assets/images/slider_2.png',
+      sliderImageUrl: 'assets/images/slider_4.png',
       sliderHeading: 'Follow your statistics',
       sliderSubHeading:
           'It\'s more fun when you can measure your impact on the environment. Track your habits and improvements.'),
