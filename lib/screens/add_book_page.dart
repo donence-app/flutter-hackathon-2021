@@ -235,8 +235,10 @@ class _AddBookPageState extends State<AddBookPage> {
               addToDonationlist(book);
               addToAllDonationlist(book);
               addToBooks(book);
+              addToAllBooks(book);
             } else {
               addToBooks(book);
+              addToAllBooks(book);
             }
             Navigator.pop(context);
           }
@@ -264,6 +266,10 @@ class _AddBookPageState extends State<AddBookPage> {
 
   void addToBooks(Book book) async{
     await DatabaseService.setBooks(FirebaseAuth.instance.currentUser.uid, book.title, book.toMap());
+  }
+
+  void addToAllBooks(Book book) async{
+    await DatabaseService.setAllBooks(FirebaseAuth.instance.currentUser.displayName, book.title, book.toMap());
   }
 
   Widget _placeHolder(double width, double height) {
