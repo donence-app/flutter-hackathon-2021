@@ -2,6 +2,8 @@ import 'package:donence_app/models/book.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:random_color/random_color.dart';
+
 class BookListTileWidget extends StatelessWidget {
   final Book book;
   final Function onPressed;
@@ -17,7 +19,7 @@ class BookListTileWidget extends StatelessWidget {
         decoration: BoxDecoration(
             border: Border(
                 right: BorderSide(
-                    color: Color( (math.Random().nextDouble() * 0xFFFFFF).toInt()) .withOpacity(1.0),
+                    color: RandomColor().randomColor(),
                     width: 5))),
         child: Center(
           child: ListTile(

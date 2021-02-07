@@ -43,6 +43,7 @@ dependencies:
   rflutter_alert: ^1.0.2
   geocoding: ^1.0.5
   flutter_placeholder_textlines: ^1.0.4
+  random_color: ^1.0.5
 
 dev_dependencies:
 

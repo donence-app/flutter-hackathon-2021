@@ -1,6 +1,7 @@
 import 'package:donence_app/models/book.dart';
 import 'package:donence_app/services/database_service.dart';
 import 'package:donence_app/widget/book_card_widget.dart';
+import 'package:donence_app/widget/book_list_tile_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +51,10 @@ class _WishesPageState extends State<WishesPage> {
                 itemCount: listBook.length,
                 itemExtent: 120,
                 itemBuilder: (BuildContext context, int index) {
-                  return BookCard(listBook[index]);
+                  return BookListTileWidget(
+                    book: listBook[index],
+                    onPressed: () => {},
+                  );
                 },
               );
             }
