@@ -10,7 +10,7 @@ class BooksPage extends StatefulWidget {
 }
 
 class _BooksPageState extends State<BooksPage> {
-  final ref = DatabaseService.allDonationlistReference();
+  final ref = DatabaseService.allBooksReference();
 
   @override
   Widget build(BuildContext context) {
