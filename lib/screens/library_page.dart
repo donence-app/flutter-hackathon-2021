@@ -25,7 +25,7 @@ class _LibraryPageState extends State<LibraryPage> {
                     text: 'Books',
                   ),
                   Tab(
-                    text: 'Wishes',
+                    text: 'My Wishlist',
                   ),
                   Tab(
                     text: 'Donation',
