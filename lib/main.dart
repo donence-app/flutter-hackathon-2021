@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         title: title,
         theme: ThemeData(
           brightness: Brightness.light,
-          primarySwatch: Colors.purple,
+          primarySwatch: Colors.deepPurple,
           fontFamily: 'Poppins',
         ),
         darkTheme: ThemeData(
