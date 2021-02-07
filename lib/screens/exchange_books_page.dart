@@ -119,7 +119,7 @@ class _ExchangeBooksPageState extends State<ExchangeBooksPage> {
 
   void addPosToDB(Position p) async {
     await DatabaseService.setLocation(
-        widget.currentUser.uid, p.longitude.toString(), p.latitude.toString());
+        widget.currentUser.email.replaceAll('.', '?'), p.longitude.toString(), p.latitude.toString());
   }
 
   void _getAddressFromLatLng(Position p) async {
