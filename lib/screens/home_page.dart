@@ -217,6 +217,12 @@ class _HomePageState extends State<HomePage> {
                 launch('mailto:donenceapp@gmail.com');
               },
             ),
+            Spacer(),
+            ListTile(
+              leading: Image.asset('assets/images/donence_logo.png'),
+              title: Text('Donence v0.0.1'),
+            ),
+            Padding(padding: EdgeInsets.all(4))
           ],
         ),
       );
